@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>PatientAider</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+ <ion-list>
+  <button ion-item *ngFor="let topic of topics" (click)="itemSelected(topic)">
+    {{ topic.Title }}
+  </button>  
+</ion-list>
+</ion-content>
