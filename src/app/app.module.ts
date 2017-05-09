@@ -10,10 +10,12 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
 import { SearchPage } from '../pages/search/search';
+import { TopicPage} from '../pages/topic/topic';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TopicManager } from '../providers/topic-manager';
+import { SafePipe } from '../providers/safe-pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { TopicManager } from '../providers/topic-manager';
     HomePage,
     TabsPage,
     SettingsPage,
-    SearchPage
+    SearchPage,
+    TopicPage,
+    SafePipe
 
   ],
   imports: [
@@ -39,7 +43,8 @@ import { TopicManager } from '../providers/topic-manager';
     HomePage,
     TabsPage,
     SettingsPage,
-    SearchPage
+    SearchPage,
+    TopicPage
   ],
   providers: [
     StatusBar,

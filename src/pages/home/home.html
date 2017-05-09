@@ -1,13 +1,17 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>PatientAider</ion-title>
+    <ion-title primary>PatientAider - by the Patient Safety Movement</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
  <ion-list>
-  <button ion-item *ngFor="let topic of topics" (click)="itemSelected(topic)">
-    {{ topic.Title }}
+  <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
+    <ion-avatar item-left>
+    <img style="display:inline;" src="/assets/images/PatientAider.png"/>
+    </ion-avatar>
+    <h1 ion-text color="primary">{{ topic.Title }}</h1>
+    <p ion-text color="secondary">{{ topic.Summary }}</p>
   </button>  
 </ion-list>
 </ion-content>
