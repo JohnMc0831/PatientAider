@@ -39,4 +39,8 @@ export class TopicManager {
     });
   }
 
+  tagTopic(topic) {
+    topic.tagged = true;
+  }
+
 }

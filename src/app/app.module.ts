@@ -9,13 +9,14 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
-import { SearchPage } from '../pages/search/search';
+import { TaggedPage } from '../pages/tagged/tagged';
 import { TopicPage} from '../pages/topic/topic';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TopicManager } from '../providers/topic-manager';
 import { SafePipe } from '../providers/safe-pipe';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { SafePipe } from '../providers/safe-pipe';
     HomePage,
     TabsPage,
     SettingsPage,
-    SearchPage,
+    TaggedPage,
     TopicPage,
     SafePipe
 
@@ -33,7 +34,8 @@ import { SafePipe } from '../providers/safe-pipe';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +45,7 @@ import { SafePipe } from '../providers/safe-pipe';
     HomePage,
     TabsPage,
     SettingsPage,
-    SearchPage,
+    TaggedPage,
     TopicPage
   ],
   providers: [

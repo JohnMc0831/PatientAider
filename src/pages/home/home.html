@@ -8,11 +8,26 @@
 </ion-header>
 
 <ion-content padding>
- <ion-list>
+   <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+    <ion-searchbar
+    [(ngModel)]="myInput"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)"
+    (ionClear)='onClear($event)'>
+  </ion-searchbar>
+ <ion-list no-lines>
   <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
-    <ion-avatar item-left>
-    <img style="display:inline;" src="/assets/images/PatientAider.png"/>
-    </ion-avatar>
+    <!--<ion-avatar item-left>-->
+    <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
+    <!--</ion-avatar>-->
     <h1 ion-text color="primary">{{ topic.Title }}</h1>
     <p ion-text color="secondary">{{ topic.Summary }}</p>
   </button>  

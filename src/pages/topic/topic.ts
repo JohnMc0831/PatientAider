@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import * as $ from 'jquery';
 
 /**
@@ -18,7 +19,7 @@ export class TopicPage {
   banner: string;
   topic: any;
   topicBody: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
       this.topic = this.navParams.get("topic");
       $("#topicTitle").html(this.topic.Title);
       this.banner = "<a href='http://patientsafetymovement.org/'><img src='https://virgil.ftltech.org/Content/PatientSafetyMovement-phone.png' style='margin:auto;display:block' alt='Patient Safety Movement' title='Patient Safety Movement'/></a>";
@@ -42,6 +43,34 @@ export class TopicPage {
     this.htmlBody = "";
     this.topicBody = "";
     $("#topicBody").empty();
+  }
+
+  topicTagged(topic) {
+    console.log("tagging topic");
+    this.storage.ready().then(() => {
+      this.storage.get("tagged").then((val) => {
+        if(val != null) {
+          console.log(`Stored tagged topics list: ${val}`);
+          var taggedTopics = val.split(',');
+          for (let t in taggedTopics) {
+            if(t.toLowerCase().indexOf(topic.toLowerCase()) > -1) {
+              //already there
+              console.log("Topic is already tagged.");
+              break;
+            } else {
+              console.log(`Tagging ${topic}`);
+              val = val + "," + topic;
+              this.storage.set("tagged", val);
+            }
+          }
+        } else 
+          console.log(`First Run:  Tagging ${topic}`);{
+          val = topic + ",";
+          this.storage.set("tagged", val);
+        }
+      })
+    });
+
   }
 
 }
