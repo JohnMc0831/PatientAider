@@ -22,7 +22,11 @@
       refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-  <button ion-button (click)="clearTaggedTopics()">Clear Tagged Topics</button>
+  <div style='text-align:center;'>
+    <button ion-button (click)="clearTaggedTopics()">Clear Tagged Topics</button><br />
+    <span ion-text color='secondary'>Swipe left on a topic to clear its tag...</span>
+  </div>
+  <hr />
  <ion-list no-lines>
   <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
     <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TopicPage } from '../topic/topic';
 import { Storage } from '@ionic/storage';
 import { TopicManager } from '../../providers/topic-manager';
 
@@ -19,11 +20,12 @@ export class TaggedPage {
   topics: topic[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public topicManager: TopicManager) {
-    this.getTaggedTopics();
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Tagged Topics');
+    this.getTaggedTopics();
   }
 
    doRefresh(refresher) {
@@ -33,6 +35,11 @@ export class TaggedPage {
       console.log('Refresh completed');
       refresher.complete();
     }, 2000);
+  }
+
+   topicSelected(topic) {
+    console.log(`User selected topic ${topic.Title}`)
+    this.navCtrl.push(TopicPage, {topic: topic, tagged: true}, {animate: true, direction: 'forward'});
   }
 
   clearTaggedTopics() {
@@ -46,9 +53,10 @@ export class TaggedPage {
        this.storage.ready().then(() => {
        this.topics = new Array<topic>();
        this.storage.get("tagged").then((val) => {
-         if(val!=null)
+         if(val!="")
          {
-            let taggedTopics: string[] = JSON.parse(val);
+           console.log(`Retrieving stored tagged topics: ${val}`);
+            var taggedTopics = JSON.parse(val) || [];
             this.topicManager.getTopics().then(topics => {
               for (let tag of taggedTopics) {
                 for (let topic of topics) {

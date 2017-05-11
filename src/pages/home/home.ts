@@ -19,7 +19,7 @@ topics: any;
 
   topicSelected(topic) {
     console.log(`User selected topic ${topic.Title}`)
-  this.navCtrl.push(TopicPage, {topic: topic}, {animate: true, direction: 'forward'});
+  this.navCtrl.push(TopicPage, {topic: topic, tagged: false}, {animate: true, direction: 'forward'});
 }
 
  doRefresh(refresher) {

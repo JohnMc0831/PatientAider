@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { TabsPage } from '../tabs/tabs';
 import * as $ from 'jquery';
 
 /**
@@ -19,8 +20,12 @@ export class TopicPage {
   banner: string;
   topic: any;
   topicBody: string;
+  tagged: boolean;
+  tagUntag: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
       this.topic = this.navParams.get("topic");
+      this.tagged = this.navParams.get("tagged");
+      this.tagUntag = this.tagged ? "Untag" : "Tag";
       $("#topicTitle").html(this.topic.Title);
       this.banner = "<a href='http://patientsafetymovement.org/'><img src='https://virgil.ftltech.org/Content/PatientSafetyMovement-phone.png' style='margin:auto;display:block' alt='Patient Safety Movement' title='Patient Safety Movement'/></a>";
       this.htmlBody = "<!DOCTYPE html><html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
@@ -33,7 +38,6 @@ export class TopicPage {
 
   ionViewDidLoad() {
     console.log(`ionViewDidLoad Topic: ${this.topic.Title}`);
-
   }
 
   ionViewWillLeave() {
@@ -46,36 +50,31 @@ export class TopicPage {
   }
 
   topicTagged(topic) {
-    console.log("tagging topic");
+    let alreadyTagged: boolean = false;
     this.storage.ready().then(() => {
       this.storage.get("tagged").then((val) => {
-        if(val!="") {
-        let taggedTopics: string[] = JSON.parse(val);
+        if(val!="" && val != null && val != []) {
+          var taggedTopics = JSON.parse(val) || [];
           for (let t of taggedTopics) {
             if(t.toLowerCase().indexOf(topic.toLowerCase()) > -1) {
-              //already there
-              console.log("Topic is already tagged.");
-              break;
-            } else {
-              console.log(`Tagging ${topic}`);
-              taggedTopics.push(topic);
-              //val = val + "|" + topic;
-              this.storage.set("tagged", JSON.stringify(taggedTopics));
-              console.log(`wrote ${JSON.stringify(taggedTopics)} to storage.`);
-              this.storage.get("tagged").then((newVal) => {
-                console.log(`Retrieving saved value: ${newVal}`);
-              });
-            }
+              console.log(`Topic ${topic} is already tagged.`);
+              alreadyTagged = true;
+            }  
           }
-        } else 
-          console.log(`First Run:  Tagging ${topic}`);{
-          if(topic != null) {
-            var writeTopic: string[] = new Array<string>();
-            writeTopic.push(topic);
-            this.storage.set("tagged", JSON.stringify(writeTopic));
+          if(!alreadyTagged) {
+            console.log(`Tagging ${topic}`);
+            taggedTopics.push(topic);
           }
-        }
-      })
+          this.storage.set("tagged", JSON.stringify(taggedTopics));
+          console.log(`wrote ${JSON.stringify(taggedTopics)} to storage.`);
+        } else {
+          let newtag: string[] = new Array<string>();
+          newtag.push(topic);
+          this.storage.set("tagged", JSON.stringify(newtag));
+          console.log(`wrote new tagged topic ${JSON.stringify(taggedTopics)} to storage (first write).`);
+        }  
+        this.navCtrl.push(TabsPage, null, {animate: true, direction: 'backward'});
+      });
     });
   }
 }
