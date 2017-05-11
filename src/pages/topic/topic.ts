@@ -38,7 +38,7 @@ export class TopicPage {
 
   ionViewWillLeave() {
     console.log(`ionViewWillLeave Topic: ${this.topic.Title}`);
-    console.log('tearing down css!!!');
+    console.log('tearing down css!!! RAWWRRR!!!!!');
     this.banner = "";
     this.htmlBody = "";
     this.topicBody = "";
@@ -49,28 +49,33 @@ export class TopicPage {
     console.log("tagging topic");
     this.storage.ready().then(() => {
       this.storage.get("tagged").then((val) => {
-        if(val != null) {
-          console.log(`Stored tagged topics list: ${val}`);
-          var taggedTopics = val.split(',');
-          for (let t in taggedTopics) {
+        if(val!="") {
+        let taggedTopics: string[] = JSON.parse(val);
+          for (let t of taggedTopics) {
             if(t.toLowerCase().indexOf(topic.toLowerCase()) > -1) {
               //already there
               console.log("Topic is already tagged.");
               break;
             } else {
               console.log(`Tagging ${topic}`);
-              val = val + "," + topic;
-              this.storage.set("tagged", val);
+              taggedTopics.push(topic);
+              //val = val + "|" + topic;
+              this.storage.set("tagged", JSON.stringify(taggedTopics));
+              console.log(`wrote ${JSON.stringify(taggedTopics)} to storage.`);
+              this.storage.get("tagged").then((newVal) => {
+                console.log(`Retrieving saved value: ${newVal}`);
+              });
             }
           }
         } else 
           console.log(`First Run:  Tagging ${topic}`);{
-          val = topic + ",";
-          this.storage.set("tagged", val);
+          if(topic != null) {
+            var writeTopic: string[] = new Array<string>();
+            writeTopic.push(topic);
+            this.storage.set("tagged", JSON.stringify(writeTopic));
+          }
         }
       })
     });
-
   }
-
 }

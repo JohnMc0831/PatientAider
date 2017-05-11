@@ -14,6 +14,15 @@
 
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <button ion-button (click)="clearTaggedTopics()">Clear Tagged Topics</button>
  <ion-list no-lines>
   <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
     <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>

@@ -28,7 +28,7 @@ export class TopicManager {
 
    getTopics() {
     console.log(`Querying this url:  ${this.baseUrl}/Topics`);
-    return new Promise(resolve => {
+    return new Promise<topic[]>(resolve => {
       this.http.get(`${this.baseUrl}/Topics`) //, this.opt)
       .map(res => res.json())
       .subscribe(data => {
@@ -43,4 +43,20 @@ export class TopicManager {
     topic.tagged = true;
   }
 
+}
+
+class topic {
+      id: number;
+      Title: string;
+      TitleGerman: string;
+      TitleSpanish: string;
+      Summary: string;
+      SummaryGerman: string;
+      SummarySpanish: string;
+      Body: string;
+      BodyGerman: string;
+      BodySpanish: string;
+      DisplayOrder: number;
+      Icon: string;
+      constructor() {}
 }
