@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TopicManager } from '../../providers/topic-manager'
 import { TopicPage } from '../../pages/topic/topic';
+import { LoadingController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -11,10 +12,19 @@ import { TopicPage } from '../../pages/topic/topic';
 export class HomePage {
 topics: any;
 
-  constructor(public navCtrl: NavController, public topicManager: TopicManager) {
+  constructor(public navCtrl: NavController, public topicManager: TopicManager, public loadingCtrl: LoadingController) {
+     let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    })
+
+    loading.present();
     this.topicManager.getTopics().then(topics => {
       this.topics = topics;
-    });  
+    });
+     
+    setTimeout(() => {
+      loading.dismiss();
+    }, 2000);
   }
 
   topicSelected(topic) {

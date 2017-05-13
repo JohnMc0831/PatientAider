@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TopicPage } from '../topic/topic';
 import { Storage } from '@ionic/storage';
 import { TopicManager } from '../../providers/topic-manager';
+import { LoadingController } from 'ionic-angular';
 
 /**
  * Generated class for the Tagged page.
@@ -19,13 +20,29 @@ import { TopicManager } from '../../providers/topic-manager';
 export class TaggedPage {
   topics: topic[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public topicManager: TopicManager) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
+              public topicManager: TopicManager, public loadingCtrl: LoadingController) {
     
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Tagged Topics');
+    //this.getTaggedTopics();
+  }
+
+  ionViewWillEnter() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    })
+
+    loading.present();
     this.getTaggedTopics();
+    
+    setTimeout(() => {
+      loading.dismiss();
+    }, 2000);
+    
+    console.log("ionViewWillEnter Tagged Topics")
   }
 
    doRefresh(refresher) {
