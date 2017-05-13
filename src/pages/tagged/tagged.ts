@@ -4,6 +4,7 @@ import { TopicPage } from '../topic/topic';
 import { Storage } from '@ionic/storage';
 import { TopicManager } from '../../providers/topic-manager';
 import { LoadingController } from 'ionic-angular';
+import * as $ from 'jquery';
 
 /**
  * Generated class for the Tagged page.
@@ -19,6 +20,7 @@ import { LoadingController } from 'ionic-angular';
 })
 export class TaggedPage {
   topics: topic[];
+  NoTopics: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
               public topicManager: TopicManager, public loadingCtrl: LoadingController) {
@@ -27,21 +29,10 @@ export class TaggedPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Tagged Topics');
-    //this.getTaggedTopics();
   }
 
   ionViewWillEnter() {
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    })
-
-    loading.present();
-    this.getTaggedTopics();
-    
-    setTimeout(() => {
-      loading.dismiss();
-    }, 2000);
-    
+    this.getTaggedTopics();   
     console.log("ionViewWillEnter Tagged Topics")
   }
 
@@ -67,8 +58,14 @@ export class TaggedPage {
   }
 
   getTaggedTopics() {
+      let loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      })
+
+      loading.present();
        this.storage.ready().then(() => {
        this.topics = new Array<topic>();
+       this.NoTopics = true;
        this.storage.get("tagged").then((val) => {
          if(val!="")
          {
@@ -80,7 +77,9 @@ export class TaggedPage {
                   if(tag != "" && topic.Title.toLowerCase().indexOf(tag.toLowerCase()) > -1) {
                     //tagged topic...add to topics list.
                     this.topics.push(topic);
-                    console.log(`pushing topic ${topic.Title} onto stack.`);
+                    console.log(`Pushing topic ${topic.Title} onto stack.`);
+                    console.log("Settings NoTopics var to false.");
+                    this.NoTopics = false;
                     break;
                   }
               }
@@ -88,6 +87,9 @@ export class TaggedPage {
           });
         }
       });
+    setTimeout(() => {
+      loading.dismiss();
+    }, 500);
     });
   }
 }

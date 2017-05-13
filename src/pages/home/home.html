@@ -1,13 +1,19 @@
 <ion-header>
   <ion-navbar color='primary'>
-    <ion-avatar item-left>
+    <!--<ion-avatar item-left>-->
     <img style="display:inline;" src="/assets/images/PatientAider.png"/>
-    </ion-avatar>
-    <ion-title><span color='primary'>PatientAider</span></ion-title>
+    <!--</ion-avatar>-->
+    <ion-title>
+      <span color='primary'>PatientAider</span>
+      <div ion-text style='font-size:x-small;' color='iconish'>
+          by the Patient Safety Movement<br />
+          <em ion-text color='snazzy'>zero preventable deaths by 2020</em>
+      </div>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="PatientAiderPage">
    <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -23,12 +29,12 @@
     (ionCancel)="onCancel($event)"
     (ionClear)='onClear($event)'>
   </ion-searchbar>
- <ion-list no-lines>
-  <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
+ <ion-list>
+  <button ion-item color='light' *ngFor="let topic of topics" (click)="topicSelected(topic)">
     <!--<ion-avatar item-left>-->
     <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
     <!--</ion-avatar>-->
-    <h1 ion-text color="primary">{{ topic.Title }}</h1>
+    <h1 ion-text color="dark">{{ topic.Title }}</h1>
     <p ion-text color="secondary">{{ topic.Summary }}</p>
   </button>  
 </ion-list>

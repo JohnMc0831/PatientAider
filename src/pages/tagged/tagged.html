@@ -5,15 +5,20 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color='primary'>
-    <ion-title>Tagged Topics</ion-title>
+    <img style="display:inline;" src="/assets/images/PatientAider.png"/>
+    <ion-title>
+      <span color='primary'>Tagged Topics</span>
+      <div ion-text style='font-size:x-small;' color='iconish'>
+          by the Patient Safety Movement<br />
+          <em ion-text color='snazzy'>zero preventable deaths by 2020</em>
+      </div>
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="PatientAiderPage">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -22,10 +27,6 @@
       refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-  <div style='text-align:center;'>
-    <button ion-button (click)="clearTaggedTopics()">Clear Tagged Topics</button><br />
-  </div>
-  <hr />
  <ion-list no-lines>
     <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
       <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
@@ -33,4 +34,9 @@
       <p ion-text color="secondary">{{ topic.Summary }}</p>
     </button>
 </ion-list>
+  <hr />
+  <div  style='text-align:center;'>
+    <span [hidden]="!this.NoTopics" ion-text color='snazzy'>No tagged topics were found!</span>
+    <button id="clearTaggedTopics" [hidden]="this.NoTopics" ion-button color='snazzy' (click)="clearTaggedTopics()">Clear Tagged Topics</button>
+  </div>
 </ion-content>

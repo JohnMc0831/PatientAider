@@ -41,12 +41,13 @@ export class TopicPage {
           var taggedTopics = JSON.parse(val) || [];
           for (let t of taggedTopics) {
             if(t.indexOf(topic.Title) > -1) {
-              console.log(`Topic ${topic.Title} is already tagged.`);
+              console.log(`Topic ${topic.Title} is tagged.`);
               this.tagUntag = "Untag";
               return true;
             }  
           }
         }
+        console.log(`Topic ${topic.Title} is NOT tagged.`);
         return false;
       });
      });
@@ -68,7 +69,7 @@ export class TopicPage {
           console.log(`Tagged topic ${topic.Title}`);
           return;
       }
-      if(this.isTopicTagged(topic)) {
+      if(val.indexOf(topic.Title) > -1) {
         console.log(`Topic Tagged State: TAGGED`);
         //untag the topic (remove it from storage)
         for (let t of taggedTopics) {
@@ -95,49 +96,4 @@ export class TopicPage {
   ionViewDidLoad() {
     console.log(`ionViewDidLoad Topic: ${this.topic.Title}`);
   }
-
-  ionViewWillLeave() {
-    console.log(`ionViewWillLeave Topic: ${this.topic.Title}`);
-    console.log('tearing down css!!! RAWWRRR!!!!!');
-    this.banner = "";
-    this.htmlBody = "";
-    this.topicBody = "";
-    $("#topicBody").empty();
-  }
-
-  // topicTagged(topic) {
-  //   let alreadyTagged: boolean = false;
-  //   this.storage.ready().then(() => {
-  //     this.storage.get("tagged").then((val) => {
-  //       if(val!="" && val != null && val != []) {
-  //         var taggedTopics = JSON.parse(val) || [];
-  //         for (let t of taggedTopics) {
-  //           if(t.toLowerCase().indexOf(topic.toLowerCase()) > -1) {
-  //             console.log(`Topic ${topic} is already tagged.`);
-  //             alreadyTagged = true;
-  //             if(this.tagUntag == "Tag") {
-  //               this.tagUntag = "Untag";
-  //             } else {
-  //               this.tagUntag = "Tag";
-  //             }
-  //           }
-  //         }
-  //         if(!alreadyTagged) {
-  //           console.log(`Tagging ${topic}`);
-  //           taggedTopics.push(topic);
-  //           this.tagUntag = "Untag";
-  //         }
-  //         this.storage.set("tagged", JSON.stringify(taggedTopics));
-  //         console.log(`wrote ${JSON.stringify(taggedTopics)} to storage.`);
-  //       } else {
-  //         let newtag: string[] = new Array<string>();
-  //         newtag.push(topic);
-  //         this.tagUntag = "Untag";
-  //         this.storage.set("tagged", JSON.stringify(newtag));
-  //         console.log(`wrote new tagged topic ${JSON.stringify(newtag)} to storage (first write).`);
-  //       }  
-  //       //this.navCtrl.push(TabsPage, null, {animate: true, direction: 'backward'});
-  //     });
-  //   });
-  // }
 }
