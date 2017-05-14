@@ -1,9 +1,7 @@
 <ion-header>
   <ion-navbar color='primary'>
-    <!--<ion-avatar item-left>-->
-    <img style="display:inline;" src="/assets/images/PatientAider.png"/>
-    <!--</ion-avatar>-->
-    <ion-title>
+    <img style="float:left;" src="assets/images/PatientAider.png"/>
+    <ion-title class="centered">
       <span color='primary'>PatientAider</span>
       <div ion-text style='font-size:x-small;' color='iconish'>
           by the Patient Safety Movement<br />
@@ -34,7 +32,7 @@
     <!--<ion-avatar item-left>-->
     <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
     <!--</ion-avatar>-->
-    <h1 ion-text color="dark">{{ topic.Title }}</h1>
+    <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
     <p ion-text color="secondary">{{ topic.Summary }}</p>
   </button>  
 </ion-list>

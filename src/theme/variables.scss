@@ -13,7 +13,10 @@ $font-path: "../assets/fonts";
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
-
+$refresher-text-color: #ffffff;
+$refresher-icon-color: #ffffff;
+$loading-ios-text-color: #488aff;
+$loading-ios-spinner-color: #488aff;
 
 
 // Named Color Variables
@@ -31,7 +34,7 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222222,
   snazzy:     #80ff00,
-  subtitle:    #80ffff
+  topicTitle: #008000
 
 );
 

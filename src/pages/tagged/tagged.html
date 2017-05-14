@@ -6,8 +6,8 @@
 -->
 <ion-header>
   <ion-navbar color='primary'>
-    <img style="display:inline;" src="/assets/images/PatientAider.png"/>
-    <ion-title>
+    <img style="float:left;" src="assets/images/PatientAider.png"/>
+    <ion-title class="centered">
       <span color='primary'>Tagged Topics</span>
       <div ion-text style='font-size:x-small;' color='iconish'>
           by the Patient Safety Movement<br />
@@ -30,7 +30,7 @@
  <ion-list no-lines>
     <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
       <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
-      <h1 ion-text color="primary">{{ topic.Title }}</h1>
+      <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
       <p ion-text color="secondary">{{ topic.Summary }}</p>
     </button>
 </ion-list>

@@ -4,7 +4,6 @@ import { TopicPage } from '../topic/topic';
 import { Storage } from '@ionic/storage';
 import { TopicManager } from '../../providers/topic-manager';
 import { LoadingController } from 'ionic-angular';
-import * as $ from 'jquery';
 
 /**
  * Generated class for the Tagged page.

@@ -14,7 +14,7 @@ topics: any;
 
   constructor(public navCtrl: NavController, public topicManager: TopicManager, public loadingCtrl: LoadingController) {
      let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      content: 'Loading Topics...'
     })
 
     loading.present();
