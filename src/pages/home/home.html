@@ -20,7 +20,7 @@
       refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-    <ion-searchbar
+  <ion-searchbar
     [(ngModel)]="myInput"
     [showCancelButton]="shouldShowCancel"
     (ionInput)="onInput($event)"
@@ -28,6 +28,9 @@
     (ionClear)='onClear($event)'>
   </ion-searchbar>
  <ion-list>
+   <ion-item color='light'class="logoDiv">
+    <a href="http://patientsafetymovement.org" target="_blank"><img src="assets/images/psm-logo.png" title="Patient Safety Movement" /></a>
+  </ion-item>  
   <button ion-item color='light' *ngFor="let topic of topics" (click)="topicSelected(topic)">
     <!--<ion-avatar item-left>-->
     <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>

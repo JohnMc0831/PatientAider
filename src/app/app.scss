@@ -16,7 +16,7 @@
 // automatically applied to the <body> element in the app.
 
 .PatientAiderPage {
-    background-image: url("../assets/images/PSMF-wallpaper.png");
+    background-image: url("../assets/images/PSMF-wallpaper.jpg");
 }
 
 .PatientAiderListItem {
@@ -29,5 +29,12 @@
 
 .centered {
     text-align: center !important;
+}
+
+.logoDiv {
+    float: right;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: white;
 }
 
