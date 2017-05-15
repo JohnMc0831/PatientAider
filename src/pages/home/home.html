@@ -29,12 +29,10 @@
   </ion-searchbar>
  <ion-list>
    <ion-item color='light'class="logoDiv">
-    <a href="http://patientsafetymovement.org" target="_blank"><img src="assets/images/psm-logo.png" title="Patient Safety Movement" /></a>
+    <img src="assets/images/psm-logo.png" title="Patient Safety Movement" />
   </ion-item>  
   <button ion-item color='light' *ngFor="let topic of topics" (click)="topicSelected(topic)">
-    <!--<ion-avatar item-left>-->
     <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
-    <!--</ion-avatar>-->
     <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
     <p ion-text color="secondary">{{ topic.Summary }}</p>
   </button>  
