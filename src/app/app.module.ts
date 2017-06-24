@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 
 import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+import { FeedbackPage } from '../pages/feedback/feedback';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
@@ -22,7 +22,7 @@ import { IonicStorageModule } from '@ionic/storage';
   declarations: [
     MyApp,
     AboutPage,
-    ContactPage,
+    FeedbackPage,
     HomePage,
     TabsPage,
     SettingsPage,
@@ -41,7 +41,7 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
+    FeedbackPage,
     HomePage,
     TabsPage,
     SettingsPage,
