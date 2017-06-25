@@ -23,7 +23,7 @@
   </ion-refresher>
  <ion-list no-lines>
     <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
-      <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
+      <ion-icon color='secondary' item-left [name]="topic.TopicIcon"></ion-icon>
       <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
       <p ion-text color="secondary">{{ topic.Summary }}</p>
     </button>
