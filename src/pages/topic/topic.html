@@ -9,5 +9,5 @@
 
 
 <ion-content id='topicBody' padding>
-  <div [innerHTML]="this.htmlBody"></div>
+  <div [innerHTML]="this.topicBody | safe: 'html'"></div>
 </ion-content>
