@@ -24,7 +24,8 @@
         "@ionic-native/splash-screen": "3.6.1",
         "@ionic-native/status-bar": "3.6.1",
         "@ionic/storage": "^2.0.1",
-        "cordova-android": "^6.2.3",
+        "cordova-ios": "^4.4.0",
+        "cordova-plugin-console": "1.0.5",
         "cordova-plugin-device": "1.1.4",
         "cordova-plugin-inappbrowser": "~1.7.1",
         "cordova-plugin-splashscreen": "~4.0.1",
@@ -57,6 +58,7 @@
     "description": "PatientAider: An Ionic project",
     "cordova": {
         "plugins": {
+            "cordova-plugin-console": {},
             "cordova-plugin-device": {},
             "cordova-plugin-inappbrowser": {},
             "cordova-plugin-splashscreen": {},
@@ -66,7 +68,7 @@
             "ionic-plugin-keyboard": {}
         },
         "platforms": [
-            "android"
+            "ios"
         ]
     }
 }
