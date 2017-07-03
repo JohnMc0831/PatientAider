@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl} from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 import * as $ from 'jquery';
 
@@ -16,24 +15,23 @@ import * as $ from 'jquery';
   templateUrl: 'topic.html',
 })
 export class TopicPage {
-  htmlBody: SafeHtml;
+  htmlBody: string;
   banner: string;
   topic: any;
   topicBody: string;
   tagged: boolean;
   tagUntag: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private domSanitizer: DomSanitizer) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
       this.topic = this.navParams.get("topic");
       this.tagUntag = this.isTopicTagged(this.topic) ? "Untag" : "Tag";
       $("#topicTitle").html(this.topic.Title);
       this.banner = "<a href='http://patientsafetymovement.org/'><img src='https://virgil.ftltech.org/Content/PatientSafetyMovement-phone.png' style='margin:auto;display:block' alt='Patient Safety Movement' title='Patient Safety Movement'/></a>";
-      this.topicBody =  "<!DOCTYPE html><html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
+      this.htmlBody = "<!DOCTYPE html><html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
 	                          "<head><meta charset='utf-8' /><title></title>" +
                               "<link rel='stylesheet' title='bootstrapSheet' type='text/css' href='https://virgil.ftltech.org/Content/bootstrap.css'>" +
 	                          "<link rel='stylesheet' title='flattySheet' type='text/css' href='https://virgil.ftltech.org/Content/flatty.css'>" +
 	                          "</head><body>" + this.banner + this.topic.Body + "</body></html>";
-      //this.topicBody = this.htmlBody;
-      this.htmlBody = domSanitizer.bypassSecurityTrustHtml(this.topicBody);
+      this.topicBody = this.htmlBody;
   }
 
   isTopicTagged(topic) {
