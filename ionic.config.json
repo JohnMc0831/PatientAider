@@ -1,5 +1,8 @@
 {
   "name": "PatientAider",
   "app_id": "d68276ce",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

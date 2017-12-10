@@ -22,6 +22,7 @@ export class TopicPage {
   topicBody: string;
   tagged: boolean;
   tagUntag: string;
+  footnotes: string[] = new Array();
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private domSanitizer: DomSanitizer, private platform: Platform) {
       platform.ready().then(() => {    
         this.platform.pause.subscribe(() => {
@@ -32,6 +33,7 @@ export class TopicPage {
             console.log('App resumed');
         });
     });
+      this.footnotes = new Array() as Array<string>;
       this.topic = this.navParams.get("topic");
       this.tagUntag = this.isTopicTagged(this.topic) ? "Untag" : "Tag";
       $("#topicTitle").html(this.topic.Title);
@@ -39,8 +41,9 @@ export class TopicPage {
       this.topicBody =  "<!DOCTYPE html><html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
 	                          "<head><meta charset='utf-8' /><title></title>" +
                               "<link rel='stylesheet' title='bootstrapSheet' type='text/css' href='https://virgil.ftltech.org/Content/bootstrap.css'>" +
-	                          "<link rel='stylesheet' title='flattySheet' type='text/css' href='https://virgil.ftltech.org/Content/flatty.css'>" +
-	                          "</head><body>" + this.banner + this.topic.Body + "</body></html>";
+                            "<link rel='stylesheet' title='flattySheet' type='text/css' href='https://virgil.ftltech.org/Content/flatty.css'>" +
+                            "<link rel='stylesheet' title='bigfootSheet' type='text/css' href='https://virgil.ftltech.org/Content/bigfoot-default.css'>" +
+	                          "</head><body>" + this.banner + this.topic.Body + "</body><script type='text/javascript' src='https://virgil.ftltech.org/Scripts/bigfoot.min.js'></script></html>";
       //this.topicBody = this.htmlBody;
       this.htmlBody = domSanitizer.bypassSecurityTrustHtml(this.topicBody);
   }
@@ -101,11 +104,31 @@ export class TopicPage {
         console.log(`Tagged topic ${topic.Title}`);
       }
     });
-  });
-}
+    });
+  }
+
+  getFootnote(index) {
+    console.log(`getting footnote number ${index}`);
+    return this.footnotes[index];
+  }
 
   ionViewDidLoad() {
     console.log(`ionViewDidLoad Topic: ${this.topic.Title}`);
+    let fnotes: string[] = [];
+    var i = 1
+    $("#footnotes > li").each(function() {
+      fnotes.push($(this).html());
+      console.log(`added footnote ${i} to footnotes!`);
+      i++;
+    });
+    $('.tooltip').each(function() {
+      var tipNumber = $(this).text();
+      $(this).prop('tooltip', `getFootnote(${tipNumber})`);
+      console.log('Added tooltip to element!');
+    });
+
+    console.log(`added a total of ${i} footnotes to footnotes array!`);
+    this.footnotes = fnotes;
   }
 
   ionViewWillLeave() {
