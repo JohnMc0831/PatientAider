@@ -1,3 +1,38 @@
 page-topic {
+    /* Tooltip container */
+    .tip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+    }
 
+    /* Tooltip text */
+    .tip .tiptext {
+        font-size: smaller;
+        visibility: hidden;
+        width: 99%;
+        background-color: #488aff;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+    
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tiptext {
+        left: 0;
+        margin-top: 20px;
+    }
+
+    .tiptext a {
+        color: lightgrey;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .tip:hover .tiptext {
+        visibility: visible;
+    }
 }
