@@ -118,10 +118,12 @@ export class TopicPage {
     var i = 1
     $("#footnotes > li").each(function() {
       var note = $(this);
+      //var noteText = $(this).html().trim();
       var noteLinkTitle = $(this).find('a').prop('title');
       var noteLinkText = $(this).find('a').text();
+      var noteLink = $(this).find('a').prop('href');
       var currTip = ".tip" + i;
-      var tippy = `${i}. ${noteLinkTitle}.  ${noteLinkText}`;
+      var tippy = `${i}. ${noteLinkTitle}. <a class='hotLink' href='${noteLink}'>${noteLinkText}</a>`;
       $(currTip).html(tippy);
       console.log(`assigned footnote ${i} with text ${tippy}} to tip!`);
       i++;
