@@ -28,22 +28,22 @@ $loading-ios-spinner-color: #488aff;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #408080,
+  primary:    #00a7e1,
+  secondary:  #36563d,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222222,
   snazzy:     #80ff00,
-  topicTitle: #008000
+  topicTitle: #73BB44
 
 );
 
 
 // App iOS Variables
 // --------------------------------------------------
-// iOS only Sass variables can go here
+// iOS only Sass variables can go herea
 
-
+$searchbar-ios-background-color: rgba(#00a7e1, 0);
 
 
 // App Material Design Variables
