@@ -23,7 +23,7 @@
     (ionCancel)="onCancel($event)"
     (ionClear)='onClear($event)'>
   </ion-searchbar>
- <ion-list>
+ <!-- <ion-list>
    <ion-item color='light'class="logoDiv">
     <img src="assets/images/psm-logo.png" title="Patient Safety Movement" />
   </ion-item>  
@@ -32,5 +32,47 @@
     <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
     <p ion-text color="secondary">{{ topic.Summary }}</p>
   </button>  
-</ion-list>
+</ion-list> -->
+
+  <ion-list class="accordion-list">
+    <!-- First Level -->
+    <ion-list-header *ngFor="let item of topics; let i = index" no-lines no-padding class="paListHeader">
+      <!-- Toggle Button -->
+      <button ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
+        <ion-icon item-left name="arrow-forward" *ngIf="!item.open"></ion-icon>
+        <ion-icon item-left name="arrow-down" *ngIf="item.open"></ion-icon>
+          {{ item.name }}
+      </button>
+
+      <ion-list *ngIf="item.children && item.open" no-lines no-padding>
+        <!-- Second Level -->
+        <ion-list-header *ngFor="let child of item.children; let j = index" no-padding>
+          <!-- Toggle Button -->
+          <button ion-item (click)="toggleItem(i, j)" *ngIf="child.children" class="child" detail-none>
+            <ion-icon item-left name="add" *ngIf="!child.open"></ion-icon>
+            <ion-icon item-left name="close" *ngIf="child.open"></ion-icon>
+            {{ child.name }}
+          </button>
+
+          <!-- Direct Add Button as Fallback -->
+          <button ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap>
+            <ion-icon color='secondary' item-left [name]="child.icon"></ion-icon>
+            <h1 ion-text color="topicTitle">{{ child.name }}</h1>
+            <p ion-text color="secondary">{{ child.information }}</p>
+
+          </button>
+
+          <ion-list *ngIf="child.children && child.open" no-padding>
+            <!-- Third Level -->
+            <button ion-item (click)="topicSelected(item.topicId)" *ngFor="let item of child.children; let k = index" detail-none class="child-item" text-wrap>
+              <ion-icon color='secondary' item-left [name]="item.icon"></ion-icon>
+              <h1 ion-text color="topicTitle">{{ item.name }}</h1>
+              <p ion-text color="secondary">{{ item.information }}</p>
+            </button>
+          </ion-list>
+
+        </ion-list-header>
+      </ion-list>
+    </ion-list-header>
+  </ion-list>
 </ion-content>
