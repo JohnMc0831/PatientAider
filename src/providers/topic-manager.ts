@@ -11,6 +11,8 @@ import { Http } from '@angular/http';
 export class TopicManager {
   baseUrl:  string; 
   topics: any[];
+  encounters: encounter[];
+  sections: section[];
   // opts: RequestOptions;
 
   constructor(public http: Http) {
@@ -43,6 +45,32 @@ export class TopicManager {
     topic.tagged = true;
   }
 
+  getEncounters() {
+    console.log(`Querying this url:  ${this.baseUrl}/Topics/Encounters`);
+    return new Promise<encounter[]>(resolve => {
+      this.http.get(`${this.baseUrl}/Topics/Encounters`) //, this.opt)
+      .map(res => res.json())
+      .subscribe(data => {
+        resolve(data);
+        console.log("Call to https://virgil.ftltech.org successfully completed!");
+        this.encounters = data;
+      });
+    });
+  }
+
+  getSections() {
+    console.log(`Querying this url:  ${this.baseUrl}/Topics/Sections`);
+    return new Promise<section[]>(resolve => {
+      this.http.get(`${this.baseUrl}/Topics/Sections`) //, this.opt)
+      .map(res => res.json())
+      .subscribe(data => {
+        resolve(data);
+        console.log("Call to https://virgil.ftltech.org successfully completed!");
+        this.sections = data;
+      });
+    });
+  }
+
 }
 
 class topic {
@@ -59,4 +87,19 @@ class topic {
       DisplayOrder: number;
       Icon: string;
       constructor() {}
+}
+
+class section {
+  id: number;
+  EncounterId: number;
+  SectionName: string;
+  SectionIcon: string;
+  Encounter: encounter;
+  Topics: topic[];
+}
+
+class encounter {
+  id: number;
+  EncounterName: string;
+  Sections: section[];
 }

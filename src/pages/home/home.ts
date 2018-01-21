@@ -14,6 +14,8 @@ import * as _ from 'lodash';
 export class HomePage {
 topics: any;
 alltopics: any;
+encounters: any[];
+sections: any[];
 
   constructor(public navCtrl: NavController, public topicManager: TopicManager, public loadingCtrl: LoadingController, public http: Http) {
      let loading = this.loadingCtrl.create({
@@ -22,11 +24,20 @@ alltopics: any;
 
     loading.present();
 
-    let localData = http.get('assets/data/home.json').map(res => res.json().items);
-    localData.subscribe(data => {
-      console.log('receiving bogus data...');
-      this.topics = data;
+    // let localData = http.get('assets/data/home.json').map(res => res.json().items);
+    // localData.subscribe(data => {
+    //   console.log('receiving bogus data...');
+    //   this.topics = data;
+    // });
+
+    this.topicManager.getEncounters().then(encounters => {
+      this.encounters = encounters;
     });
+
+    this.topicManager.getSections().then(sections => {
+      this.sections = sections;
+      console.log(`loaded ${this.sections.length} sections!`);
+    })
 
     this.topicManager.getTopics().then(topics => {
       this.alltopics = topics;
@@ -34,27 +45,28 @@ alltopics: any;
      
     setTimeout(() => {
       loading.dismiss();
-    }, 2000);
+    }, 4000);
   }
 
-  topicSelected(topicId) {
-    console.log(`Topic ID is ${topicId}`);
-    var topicIndex = _.findIndex(this.alltopics, function(t) {
-      return t.id == topicId;
-    });
-    var topic = this.alltopics[topicIndex];
+  topicSelected(i, j, k) {
+    console.log(`Topic ID is ${k}`);
+    // var topicIndex = _.findIndex(this.alltopics, function(t) {
+    //   return t.id == topicId;
+    // });
+    var topic = this.encounters[i].Sections[j].Topics[k];
     console.log(`User selected topic ${topic.Title}`)
     this.navCtrl.push(TopicPage, {topic: topic, tagged: false}, {animate: true, direction: 'forward'});
   }
 
-  toggleSection(i) {
-    this.topics[i].open = !this.topics[i].open;
+  toggleEncounter(i) {
+    this.encounters[i].open = !this.encounters[i].open;
+  }
+  
+  toggleSection(i, j) {
+    this.encounters[i].Sections[j].open = !this.encounters[i].Sections[j].open;
+    //this.sections[i].open = !this.sections[i].open;
   }
  
-  toggleItem(i, j) {
-    this.topics[i].children[j].open = !this.topics[i].children[j].open;
-  }
-
  doRefresh(refresher) {
     console.log('Begin async operation', refresher);
     this.topicManager.getTopics().then(topics => {
