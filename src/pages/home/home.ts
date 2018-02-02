@@ -24,14 +24,12 @@ sections: any[];
 
     loading.present();
 
-    // let localData = http.get('assets/data/home.json').map(res => res.json().items);
-    // localData.subscribe(data => {
-    //   console.log('receiving bogus data...');
-    //   this.topics = data;
-    // });
-
     this.topicManager.getEncounters().then(encounters => {
       this.encounters = encounters;
+    });
+
+    this.topicManager.getTopics().then(topics => {
+      this.alltopics = topics;
     });
 
     this.topicManager.getSections().then(sections => {
@@ -39,13 +37,31 @@ sections: any[];
       console.log(`loaded ${this.sections.length} sections!`);
     })
 
-    this.topicManager.getTopics().then(topics => {
-      this.alltopics = topics;
-    });
-     
+    
     setTimeout(() => {
       loading.dismiss();
     }, 4000);
+  }
+
+  getTopicTitle(id)
+  {
+    var topic = this.alltopics.find(t => t.id == id);
+    console.log(`getTopicTitle called with id ${id} return a title of ${topic.Title}...`);
+    return topic.Title;
+  }
+
+  getTopicSummary(id)
+  {
+    var topic = this.alltopics.find(t => t.id == id);
+    console.log(`getTopicTitle called with id ${id} return a summary of ${topic.Summary}...`);
+    return topic.Summary;
+  }
+
+  getTopicIcon(id)
+  {
+    var topic = this.alltopics.find(t => t.id == id);
+    console.log(`getTopicTitle called with id ${id} return an icon of ${topic.Icon}...`);
+    return topic.Icon;
   }
 
   topicSelected(i, j, k) {

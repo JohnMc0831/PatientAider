@@ -23,17 +23,6 @@
     (ionCancel)="onCancel($event)"
     (ionClear)='onClear($event)'>
   </ion-searchbar>
- <!-- <ion-list>
-   <ion-item color='light'class="logoDiv">
-    <img src="assets/images/psm-logo.png" title="Patient Safety Movement" />
-  </ion-item>  
-  <button ion-item color='light' *ngFor="let topic of topics" (click)="topicSelected(topic)">
-    <ion-icon color='secondary' item-left [name]="topic.TopicIcon"></ion-icon>
-    <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
-    <p ion-text color="secondary">{{ topic.Summary }}</p>
-  </button>  
-</ion-list> -->
-
   <ion-list class="accordion-list">
     <!-- First Level -->
     <ion-list-header *ngFor="let encounter of encounters; let i = index" no-lines no-padding class="paListHeader">
@@ -55,20 +44,19 @@
           </button>
 
           <!-- Direct Add Button as Fallback -->
-          <!-- <button ion-item *ngIf="!section.Topics" ion-item detail-none class="child-item" text-wrap>
+          <button ion-item *ngIf="!section.Topics" ion-item detail-none class="child-item" text-wrap>
             <ion-icon color='secondary' item-left [name]="section.SectionIcon"></ion-icon>
             <h1 ion-text color="topicTitle">{{ section.SectionName }}</h1>
-          </button> -->
+          </button>
 
-          <ion-list *ngIf="section.Topics && section.open" no-padding>
+          <ion-list *ngIf="section.Topics && section.open" no-padding> 
             <!-- Third Level -->
-            <button ion-item (click)="topicSelected(i, j, k)" *ngFor="let topic of section.Topics; let k = index" detail-none class="child-item" text-wrap>
+            <button ion-item (click)="topicSelected(i, j, topic.id)" *ngFor="let topic of section.Topics" detail-none class="child-item" text-wrap>
               <ion-icon color='secondary' item-left [name]="topic.Icon"></ion-icon>
-              <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
+              <h3 ion-text color="topicTitle">{{ topic.Title }}</h3>
               <p ion-text color="secondary">{{ topic.Summary }}</p>
             </button>
           </ion-list>
-
         </ion-list-header>
       </ion-list>
     </ion-list-header>

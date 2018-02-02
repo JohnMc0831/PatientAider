@@ -17,9 +17,9 @@ export class TopicManager {
 
   constructor(public http: Http) {
     console.log('Hello TopicManager Provider');
-    this.baseUrl = 'https://virgil.ftltech.org/api/'; 
+    this.baseUrl = 'https://virgil.ftltech.org/api'; 
     this.getTopics();
-    // TODO:  recode this for over-the-wire security...
+        // TODO:  recode this for over-the-wire security...
     //let sosheaders: Headers = new Headers;
     //sosheaders.set("SOS-APP-KEY", "3kHgtutSvUsGYr/nUK/pPxqffFnI9qFFe2jfPEug2b8=");
     //this.opts = new RequestOptions({
@@ -46,9 +46,9 @@ export class TopicManager {
   }
 
   getEncounters() {
-    console.log(`Querying this url:  ${this.baseUrl}/Topics/Encounters`);
+    console.log(`Querying this url:  ${this.baseUrl}/Encounters`);
     return new Promise<encounter[]>(resolve => {
-      this.http.get(`${this.baseUrl}/Topics/Encounters`) //, this.opt)
+      this.http.get(`${this.baseUrl}/Encounters`) //, this.opt)
       .map(res => res.json())
       .subscribe(data => {
         resolve(data);
@@ -59,16 +59,31 @@ export class TopicManager {
   }
 
   getSections() {
-    console.log(`Querying this url:  ${this.baseUrl}/Topics/Sections`);
+    var that = this;
+    console.log(`Querying this url:  ${this.baseUrl}/SectionsWithTopics`);
     return new Promise<section[]>(resolve => {
-      this.http.get(`${this.baseUrl}/Topics/Sections`) //, this.opt)
+      this.http.get(`${this.baseUrl}/SectionsWithTopics`) //, this.opt)
       .map(res => res.json())
       .subscribe(data => {
         resolve(data);
         console.log("Call to https://virgil.ftltech.org successfully completed!");
         this.sections = data;
+        this.sections.forEach(function(s) {
+          s.Topics = [];
+          for (let topicId of s.TopicIds) {
+            var topic = that.getTopicById(topicId);
+            s.Topics.push(topic);
+            console.log(`Adding topic ${topic.Title} to section ${s.SectionName}.`);
+          };
+        });
+        console.log(`loaded ${this.sections.length} sections!`);
       });
     });
+  }
+
+  getTopicById(id) {
+    console.log(`Retrieving topic with id ${id} from memory...`);
+    return this.topics.find(t => t.id == id);
   }
 
 }
@@ -96,6 +111,7 @@ class section {
   SectionIcon: string;
   Encounter: encounter;
   Topics: topic[];
+  TopicIds: number[];
 }
 
 class encounter {
