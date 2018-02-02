@@ -28,14 +28,14 @@ sections: any[];
       this.encounters = encounters;
     });
 
-    this.topicManager.getTopics().then(topics => {
-      this.alltopics = topics;
-    });
+    // this.topicManager.getTopics().then(topics => {
+    //   this.alltopics = topics;
+    // });
 
-    this.topicManager.getSections().then(sections => {
-      this.sections = sections;
-      console.log(`loaded ${this.sections.length} sections!`);
-    })
+    // this.topicManager.getSections().then(sections => {
+    //   this.sections = sections;
+    //   console.log(`loaded ${this.sections.length} sections!`);
+    // });
 
     
     setTimeout(() => {
@@ -43,26 +43,26 @@ sections: any[];
     }, 4000);
   }
 
-  getTopicTitle(id)
-  {
-    var topic = this.alltopics.find(t => t.id == id);
-    console.log(`getTopicTitle called with id ${id} return a title of ${topic.Title}...`);
-    return topic.Title;
-  }
+  // getTopicTitle(id)
+  // {
+  //   var topic = this.alltopics.find(t => t.id == id);
+  //   console.log(`getTopicTitle called with id ${id} return a title of ${topic.Title}...`);
+  //   return topic.Title;
+  // }
 
-  getTopicSummary(id)
-  {
-    var topic = this.alltopics.find(t => t.id == id);
-    console.log(`getTopicTitle called with id ${id} return a summary of ${topic.Summary}...`);
-    return topic.Summary;
-  }
+  // getTopicSummary(id)
+  // {
+  //   var topic = this.alltopics.find(t => t.id == id);
+  //   console.log(`getTopicTitle called with id ${id} return a summary of ${topic.Summary}...`);
+  //   return topic.Summary;
+  // }
 
-  getTopicIcon(id)
-  {
-    var topic = this.alltopics.find(t => t.id == id);
-    console.log(`getTopicTitle called with id ${id} return an icon of ${topic.Icon}...`);
-    return topic.Icon;
-  }
+  // getTopicIcon(id)
+  // {
+  //   var topic = this.alltopics.find(t => t.id == id);
+  //   console.log(`getTopicTitle called with id ${id} return an icon of ${topic.Icon}...`);
+  //   return topic.Icon;
+  // }
 
   topicSelected(i, j, k) {
     console.log(`Topic ID is ${k}`);

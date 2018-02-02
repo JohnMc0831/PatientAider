@@ -67,16 +67,15 @@ export class TopicManager {
       .subscribe(data => {
         resolve(data);
         console.log("Call to https://virgil.ftltech.org successfully completed!");
-        this.sections = data;
-        this.sections.forEach(function(s) {
-          s.Topics = [];
-          for (let topicId of s.TopicIds) {
-            var topic = that.getTopicById(topicId);
-            s.Topics.push(topic);
-            console.log(`Adding topic ${topic.Title} to section ${s.SectionName}.`);
-          };
-        });
-        console.log(`loaded ${this.sections.length} sections!`);
+        // this.sections = data;
+        // this.sections.forEach(function(s) {
+        //   s.Topics = [];
+        //   for (let topicId of s.TopicIds) {
+        //     var topic = that.getTopicById(topicId);
+        //     s.Topics.push(topic);
+        //     console.log(`Adding topic ${topic.Title} to section ${s.SectionName}.`);
+        //   };
+        // });
       });
     });
   }
