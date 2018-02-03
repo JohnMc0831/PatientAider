@@ -22,6 +22,10 @@ sections: any[];
       content: 'Loading Topics...'
     })
 
+    let processing = this.loadingCtrl.create({
+      content: "Processing and Updating Topics..."
+    })
+
     loading.present();
 
     this.topicManager.getEncounters().then(encounters => {
@@ -40,29 +44,12 @@ sections: any[];
     
     setTimeout(() => {
       loading.dismiss();
-    }, 4000);
+      processing.present();
+      setTimeout(() => {
+        processing.dismiss();
+      }, 3000)
+    }, 5000);
   }
-
-  // getTopicTitle(id)
-  // {
-  //   var topic = this.alltopics.find(t => t.id == id);
-  //   console.log(`getTopicTitle called with id ${id} return a title of ${topic.Title}...`);
-  //   return topic.Title;
-  // }
-
-  // getTopicSummary(id)
-  // {
-  //   var topic = this.alltopics.find(t => t.id == id);
-  //   console.log(`getTopicTitle called with id ${id} return a summary of ${topic.Summary}...`);
-  //   return topic.Summary;
-  // }
-
-  // getTopicIcon(id)
-  // {
-  //   var topic = this.alltopics.find(t => t.id == id);
-  //   console.log(`getTopicTitle called with id ${id} return an icon of ${topic.Icon}...`);
-  //   return topic.Icon;
-  // }
 
   topicSelected(i, j, k) {
     console.log(`Topic ID is ${k}`);
@@ -85,13 +72,13 @@ sections: any[];
  
  doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    this.topicManager.getTopics().then(topics => {
-      this.topics = topics;
-    });  
+    this.topicManager.getEncounters().then(encounters => {
+      this.encounters = encounters;
+    });
     setTimeout(() => {
       console.log('Refresh completed');
       refresher.complete();
-    }, 2000);
+    }, 5000);
   }
 
   onInput($event) {
