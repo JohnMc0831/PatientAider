@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { TopicManager } from '../../providers/topic-manager'
 import { TopicPage } from '../../pages/topic/topic';
 import { LoadingController } from 'ionic-angular';
+import {Platform} from 'ionic-angular';
 import { Http } from '@angular/http';
 import * as _ from 'lodash';
 
@@ -16,8 +17,9 @@ topics: any;
 alltopics: any;
 encounters: any[];
 sections: any[];
+psmImage: string = "assets/images/";
 
-  constructor(public navCtrl: NavController, public topicManager: TopicManager, public loadingCtrl: LoadingController, public http: Http) {
+  constructor(public navCtrl: NavController, public topicManager: TopicManager, public loadingCtrl: LoadingController, public http: Http, public platform: Platform) {
      let loading = this.loadingCtrl.create({
       content: 'Loading Topics...'
     })
@@ -25,6 +27,16 @@ sections: any[];
     let processing = this.loadingCtrl.create({
       content: "Processing and Updating Topics..."
     })
+
+    let screenWidth: number = platform.width();
+    if (screenWidth > 700){
+        console.log("Tablet detected!");
+        this.psmImage += "PatientSafetyMovement-tablet.png"
+
+    } else {
+      console.log("Phone detected!");
+      this.psmImage += "PatientSafetyMovement-phone.png"
+    }
 
     loading.present();
 
@@ -47,7 +59,7 @@ sections: any[];
       processing.present();
       setTimeout(() => {
         processing.dismiss();
-      }, 3000)
+      }, 5000)
     }, 5000);
   }
 

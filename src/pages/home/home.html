@@ -16,13 +16,16 @@
       refreshingText="Downloading and Updating Topics...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-searchbar 
+  <!-- <ion-searchbar 
     [(ngModel)]="myInput"
     [showCancelButton]="shouldShowCancel"
     (ionInput)="onInput($event)"
     (ionCancel)="onCancel($event)"
     (ionClear)='onClear($event)'>
-  </ion-searchbar>
+  </ion-searchbar> -->
+  <div class="centered">
+    <img style="margin:auto;" [src]="psmImage"/>
+  </div>
   <ion-list class="accordion-list">
     <!-- First Level -->
     <ion-list-header *ngFor="let encounter of encounters; let i = index" no-lines no-padding class="paListHeader">
