@@ -1,13 +1,14 @@
 page-home {
     .accordion-list {
-        background: color($colors, light);
+        /*background: color($colors, light);*/
         height: 100%;
     }
     .section {
         background: #fff;
-        color: #000;
+        color: #008040 !important;
         margin-bottom: 4px;
     }
+
     .section-active {
         background: #74BB45;
         color: #fff;
@@ -29,14 +30,19 @@ page-home {
     .label {
         margin: 0px;
     }
+
     .list {
         margin-bottom: 4px;
     }
+
     .paListHeader {
         min-height: 0px !important;
     }
 
     .centered {
         text-align: center;
+        padding-bottom: 10px;
+        color: white;
+        text-shadow: 2px 2px #000;
     }
 }
