@@ -2,7 +2,7 @@
   <ion-navbar color='primary'>
     <img style="float:left;margin:0;padding:0;" src="assets/images/PatientAider.png"/>
     <ion-title class="centered">
-      <h2>PatientAider</h2>
+      <h3>PatientAider</h3>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -26,7 +26,7 @@
 </ion-list>
   <hr />
   <div  style='text-align:center;'>
-    <span [hidden]="!this.NoTopics" ion-text color='snazzy'>No tagged topics were found!</span>
-    <button id="clearTaggedTopics" [hidden]="this.NoTopics" ion-button color='snazzy' (click)="clearTaggedTopics()">Clear Tagged Topics</button>
+    <span [hidden]="!this.NoTopics" ion-text color='light'>No tagged topics were found!</span>
+    <button id="clearTaggedTopics" [hidden]="this.NoTopics" ion-button color='light' (click)="clearTaggedTopics()">Clear Tagged Topics</button>
   </div>
 </ion-content>

@@ -31,11 +31,11 @@ psmImage: string = "assets/images/";
     let screenWidth: number = platform.width();
     if (screenWidth > 700){
         console.log("Tablet detected!");
-        this.psmImage += "PatientSafetyMovement-tablet.png"
+        this.psmImage += "Patient_Safety_Movement.png"
 
     } else {
       console.log("Phone detected!");
-      this.psmImage += "PatientSafetyMovement-phone.png"
+      this.psmImage += "Patient_Safety_Movement.png"
     }
 
     loading.present();

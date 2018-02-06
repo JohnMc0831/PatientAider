@@ -19,6 +19,11 @@ import { SafePipe } from '../providers/safe-pipe';
 import { IonicStorageModule } from '@ionic/storage';
 import { TooltipsModule } from 'ionic-tooltips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Pro } from '@ionic/pro';
+
+const IonicPro = Pro.init('APP_ID', {
+  appVersion: "e1d536c5"
+});
 
 @NgModule({
   declarations: [
