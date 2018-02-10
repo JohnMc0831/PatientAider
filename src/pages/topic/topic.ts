@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 import * as $ from 'jquery';
+import { PopoverController } from 'ionic-angular';
+import { PopoverPage } from '../popover/popover'
 
 /**
  * Generated class for the Topic page.
@@ -23,7 +25,8 @@ export class TopicPage {
   tagged: boolean;
   tagUntag: string;
   footnotes: string[] = new Array();
-  constructor(public navCtrl: NavController, public navParams: NavParams, private domSanitizer: DomSanitizer, public storage: Storage, private platform: Platform) { //
+  constructor(public navCtrl: NavController, public navParams: NavParams, private domSanitizer: DomSanitizer, 
+                              public storage: Storage, private platform: Platform, public popoverCtrl: PopoverController) { 
       platform.ready().then(() => {    
         this.platform.pause.subscribe(() => {
             console.log('App paused');
@@ -32,8 +35,7 @@ export class TopicPage {
         this.platform.resume.subscribe(() => {
             console.log('App resumed');
         });
-    });
-      this.footnotes = new Array() as Array<string>;
+      });
       this.topic = this.navParams.get("topic");
       this.tagUntag = this.isTopicTagged(this.topic) ? "Untag" : "Tag";
       $("#topicTitle").html(this.topic.Title);
@@ -43,9 +45,15 @@ export class TopicPage {
                               "<link rel='stylesheet' title='bootstrapSheet' type='text/css' href='https://virgil.ftltech.org/Content/bootstrap.css'>" +
                             "<link rel='stylesheet' title='flattySheet' type='text/css' href='https://virgil.ftltech.org/Content/flatty.css'>" +
                             "<link rel='stylesheet' title='bigfootSheet' type='text/css' href='https://virgil.ftltech.org/Content/bigfoot-default.css'>" +
-	                          "</head><body>" + this.banner + this.topic.Body + "</body><script type='text/javascript' src='https://virgil.ftltech.org/Scripts/bigfoot.min.js'></script></html>";
-      
+                            "</head><body>" + this.banner + this.topic.Body + "</body></html>";
       this.htmlBody = domSanitizer.bypassSecurityTrustHtml(this.topicBody);
+  }
+
+  presentPopover(myEvent, supText) {
+    let popover = this.popoverCtrl.create(PopoverPage, supText);
+    popover.present({
+      ev: myEvent
+    });
   }
 
   isTopicTagged(topic) {
@@ -107,28 +115,58 @@ export class TopicPage {
     });
   }
 
-
-  getFootnote(index) {
-    console.log(`getting footnote number ${index}`);
-    return this.footnotes[index];
-  }
-
-  ionViewDidLoad() {
-    console.log(`ionViewDidLoad Topic: ${this.topic.Title}`);
+  ionViewDidLoad() { 
+    var pg = this;
+    console.log(`enumerateFootnotes is evaluating Topic: ${this.topic.Title}`);
     var i = 1
-    $("#footnotes > li").each(function() {
-      var note = $(this);
-      //var noteText = $(this).html().trim();
-      var noteLinkTitle = $(this).find('a').prop('title');
-      var noteLinkText = $(this).find('a').text();
-      var noteLink = $(this).find('a').prop('href');
-      var currTip = ".tip" + i;
-      var tippy = `${i}. ${noteLinkTitle}. <a class='hotLink' href='${noteLink}'>${noteLinkText}</a>`;
-      $(currTip).html(tippy);
-      console.log(`assigned footnote ${i} with text ${tippy}} to tip!`);
+    $("#footnotes > li").each(function(index, item) {
+      pg.footnotes.push(item);
+      console.log(`Pushed item #${index} onto the footnotes array...`);
       i++;
     });
+
     console.log(`added a total of ${i} footnotes to footnotes array!`);
+    $("sup").bind("click", function() {
+      var notes = $(this).text();
+      var notesList = notes.split(',');
+      var popupText = "";
+      $.each(notesList, function(index, item) {
+        item = item.trim();
+        if(item.indexOf("-") > -1 ) {
+          //a continuous list of notes like 62-67...
+          var lowEnd = +item.substring(0, item.indexOf("-"));
+          var highEnd = +item.substring(item.indexOf("-") + 1);
+          for (let index = lowEnd; index < highEnd + 1; index++) {
+            var note = pg.footnotes[index - 1];
+            var thisNoteText = $(note).html();
+            var noteText = `<p class='footnote'>${index}. ${thisNoteText}</p>`;
+            popupText += noteText;
+          }
+        } else {
+          item = +item.trim();
+          var note = "";
+          try {
+            note = pg.footnotes[item - 1];
+            var thisNoteText = $(note).html();
+            if(thisNoteText.indexOf(`<p class="bodytext">`) > - 1) {
+              thisNoteText = thisNoteText.replace(`<p class="bodytext">`, "");
+              thisNoteText = thisNoteText.replace(`</p>`, "");
+              thisNoteText = thisNoteText.replace("<strong>", "").replace("</strong>", "");
+            }
+            popupText += `<p class='footnote'>${item}. ${thisNoteText}</p>`;
+          } catch (error) {
+            popupText += `<p ion-item color="danger" class='footnote'>No matching footnote found!</p>`;
+            console.error("No matching footnote found!");
+          }
+        }
+      });
+      console.log(popupText);
+      var navObj = {
+        text: popupText
+      }
+      let popover = pg.popoverCtrl.create(PopoverPage, navObj);
+      popover.present();
+    });
   }
 
   ionViewWillLeave() {
@@ -140,3 +178,41 @@ export class TopicPage {
     $('link[title="flattySheet"]').remove();
   }
 }
+
+// var newTitle;
+// var noteText = $(this).html().trim();
+// var currentNote  = `${i}. ${noteText}`;
+// var sups = $(`sup:contains("${i}")`);
+// $.each(sups, function(index, item) {
+//   var sup = $(item);
+//   var footnoteText = sup.text();
+//   if(footnoteText.indexOf(',') > -1) {
+//     var notesList = footnoteText.split(',');
+//     $.each(notesList, function(index, note) {
+//       if(note == i) {
+//         //match
+//         if(sup.prop("title") != "") {
+//           var currentTitle = sup.prop("title");
+//           newTitle = currentTitle + "<br /><br />" + currentNote;
+//         } else {
+//           newTitle = currentNote;
+//         }
+//         //sup.attr('data-tooltip', newTitle);
+//         //sup.html(`<button ion-button [tooltip]="${newTitle}">${sup.text()}</button>`);
+//         pg.footnotes.push(newTitle);
+//        // console.log(`assigned title ${newTitle} to <sup>${sup.text()}</sup>!`);
+//       }
+//     });
+//   } else if(footnoteText == i) {
+//     if(sup.prop("title") != "") {
+//       var currentTitle = sup.prop("title");
+//       newTitle = currentTitle + "<br /><br />" + currentNote;
+//     } else {
+//       newTitle = currentNote;
+//     }
+//     //sup.attr("data-tooltip", newTitle);
+//     pg.footnotes.push(newTitle);
+//     //sup.html(`<button ion-button [tooltip]="${newTitle}">${sup.text()}</button>`);
+//     //console.log(`assigned title ${newTitle} to <sup>${sup.text()}</sup>!`);
+//   }
+// });   

@@ -44,6 +44,18 @@ $colors: (
 
 $searchbar-ios-background-color: rgba(#00a7e1, 0);
 
+$popover-ios-width: 95%;
+.popover-ios .popover-content {
+  width: 90%;
+  min-width: 0;
+  min-height: 0;
+  max-height: 90%;
+  border-radius: 10px;
+  color: #000;
+  background: #fff;
+  border: 2px solid #00a7e1;
+}
+
 
 // App Material Design Variables
 // --------------------------------------------------

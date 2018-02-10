@@ -11,6 +11,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
 import { TaggedPage } from '../pages/tagged/tagged';
 import { TopicPage} from '../pages/topic/topic';
+import { PopoverPage } from '../pages/popover/popover';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -35,7 +36,8 @@ const IonicPro = Pro.init('APP_ID', {
     SettingsPage,
     TaggedPage,
     TopicPage,
-    SafePipe
+    SafePipe,
+    PopoverPage
 
   ],
   imports: [
@@ -55,7 +57,8 @@ const IonicPro = Pro.init('APP_ID', {
     TabsPage,
     SettingsPage,
     TaggedPage,
-    TopicPage
+    TopicPage,
+    PopoverPage
   ],
   providers: [
     StatusBar,

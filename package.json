@@ -45,11 +45,11 @@
     "qtip2": "^3.0.3",
     "rxjs": "5.1.1",
     "sw-toolbox": "3.4.0",
+    "tippy.js": "^2.1.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.1.7",
-    "ionic": "3.19.1",
+    "@ionic/app-scripts": "3.1.8",
     "typescript": "~2.2.1"
   },
   "cordovaPlugins": [
