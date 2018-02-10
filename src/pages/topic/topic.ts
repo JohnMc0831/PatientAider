@@ -39,13 +39,13 @@ export class TopicPage {
       this.topic = this.navParams.get("topic");
       this.tagUntag = this.isTopicTagged(this.topic) ? "Untag" : "Tag";
       $("#topicTitle").html(this.topic.Title);
-      this.banner = "<a href='http://patientsafetymovement.org/'><img src='https://virgil.ftltech.org/Content/PatientSafetyMovement-phone.png' style='margin:auto;display:block' alt='Patient Safety Movement' title='Patient Safety Movement'/></a>";
+      //this.banner = "<a href='http://patientsafetymovement.org/'><img src='https://virgil.ftltech.org/Content/PatientSafetyMovement-phone.png' style='margin:auto;display:block' alt='Patient Safety Movement' title='Patient Safety Movement'/></a>";
       this.topicBody =  //"<!DOCTYPE html><html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
 	                      //    "<head><meta charset='utf-8' /><title></title>" +
                               "<link rel='stylesheet' title='bootstrapSheet' type='text/css' href='https://virgil.ftltech.org/Content/bootstrap.css'>" +
                             "<link rel='stylesheet' title='flattySheet' type='text/css' href='https://virgil.ftltech.org/Content/flatty.css'>" +
                             "<link rel='stylesheet' title='bigfootSheet' type='text/css' href='https://virgil.ftltech.org/Content/bigfoot-default.css'>" +
-                            "</head><body>" + this.banner + this.topic.Body + "</body></html>";
+                            "</head><body>" + this.topic.Body + "</body></html>";
       this.htmlBody = domSanitizer.bypassSecurityTrustHtml(this.topicBody);
   }
 
@@ -114,6 +114,17 @@ export class TopicPage {
     });
     });
   }
+  
+  toggleFootnotes(event) {
+    if($("#footnotes").hasClass("hidden")) {
+      $("#footnotes").removeClass("hidden");
+      console.log("Showing footnotes!");
+    } else {
+      $("#footnotes").addClass("hidden");
+      console.log("Hiding footnotes!");
+    console.log("toggled Show/Hide Footnotes");
+    } 
+  }
 
   ionViewDidLoad() { 
     var pg = this;
@@ -124,8 +135,16 @@ export class TopicPage {
       console.log(`Pushed item #${index} onto the footnotes array...`);
       i++;
     });
-
     console.log(`added a total of ${i} footnotes to footnotes array!`);
+
+      $('a').bind("click", function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        window.open(encodeURI(url), '_system', 'location=yes');
+      });
+
+      $("#footnotes").addClass("hidden");
+
     $("sup").bind("click", function() {
       var notes = $(this).text();
       var notesList = notes.split(',');
@@ -179,40 +198,4 @@ export class TopicPage {
   }
 }
 
-// var newTitle;
-// var noteText = $(this).html().trim();
-// var currentNote  = `${i}. ${noteText}`;
-// var sups = $(`sup:contains("${i}")`);
-// $.each(sups, function(index, item) {
-//   var sup = $(item);
-//   var footnoteText = sup.text();
-//   if(footnoteText.indexOf(',') > -1) {
-//     var notesList = footnoteText.split(',');
-//     $.each(notesList, function(index, note) {
-//       if(note == i) {
-//         //match
-//         if(sup.prop("title") != "") {
-//           var currentTitle = sup.prop("title");
-//           newTitle = currentTitle + "<br /><br />" + currentNote;
-//         } else {
-//           newTitle = currentNote;
-//         }
-//         //sup.attr('data-tooltip', newTitle);
-//         //sup.html(`<button ion-button [tooltip]="${newTitle}">${sup.text()}</button>`);
-//         pg.footnotes.push(newTitle);
-//        // console.log(`assigned title ${newTitle} to <sup>${sup.text()}</sup>!`);
-//       }
-//     });
-//   } else if(footnoteText == i) {
-//     if(sup.prop("title") != "") {
-//       var currentTitle = sup.prop("title");
-//       newTitle = currentTitle + "<br /><br />" + currentNote;
-//     } else {
-//       newTitle = currentNote;
-//     }
-//     //sup.attr("data-tooltip", newTitle);
-//     pg.footnotes.push(newTitle);
-//     //sup.html(`<button ion-button [tooltip]="${newTitle}">${sup.text()}</button>`);
-//     //console.log(`assigned title ${newTitle} to <sup>${sup.text()}</sup>!`);
-//   }
-// });   
+
