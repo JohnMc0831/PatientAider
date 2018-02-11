@@ -43,17 +43,7 @@ psmImage: string = "assets/images/";
     this.topicManager.getEncounters().then(encounters => {
       this.encounters = encounters;
     });
-
-    // this.topicManager.getTopics().then(topics => {
-    //   this.alltopics = topics;
-    // });
-
-    // this.topicManager.getSections().then(sections => {
-    //   this.sections = sections;
-    //   console.log(`loaded ${this.sections.length} sections!`);
-    // });
-
-    
+   
     setTimeout(() => {
       loading.dismiss();
       processing.present();
@@ -65,9 +55,6 @@ psmImage: string = "assets/images/";
 
   topicSelected(i, j, k) {
     console.log(`Topic ID is ${k}`);
-    // var topicIndex = _.findIndex(this.alltopics, function(t) {
-    //   return t.id == topicId;
-    // });
     var topic = this.encounters[i].Sections[j].Topics[k];
     console.log(`User selected topic ${topic.Title}`)
     this.navCtrl.push(TopicPage, {topic: topic, tagged: false}, {animate: true, direction: 'forward'});
@@ -79,7 +66,6 @@ psmImage: string = "assets/images/";
   
   toggleSection(i, j) {
     this.encounters[i].Sections[j].open = !this.encounters[i].Sections[j].open;
-    //this.sections[i].open = !this.sections[i].open;
   }
  
  doRefresh(refresher) {

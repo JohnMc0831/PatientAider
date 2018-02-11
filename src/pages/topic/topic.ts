@@ -1,3 +1,4 @@
+import { TopicManager } from './../../providers/topic-manager';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -26,7 +27,7 @@ export class TopicPage {
   tagUntag: string;
   footnotes: string[] = new Array();
   constructor(public navCtrl: NavController, public navParams: NavParams, private domSanitizer: DomSanitizer, 
-                              public storage: Storage, private platform: Platform, public popoverCtrl: PopoverController) { 
+                              public storage: Storage, private platform: Platform, public popoverCtrl: PopoverController, public topicManager: TopicManager) { 
       platform.ready().then(() => {    
         this.platform.pause.subscribe(() => {
             console.log('App paused');
@@ -130,6 +131,7 @@ export class TopicPage {
     var pg = this;
     console.log(`enumerateFootnotes is evaluating Topic: ${this.topic.Title}`);
     var i = 1
+    $("#footnotes").empty().html(this.topicManager.footnotes);
     $("#footnotes > li").each(function(index, item) {
       pg.footnotes.push(item);
       console.log(`Pushed item #${index} onto the footnotes array...`);
