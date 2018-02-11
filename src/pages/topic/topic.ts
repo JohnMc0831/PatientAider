@@ -204,6 +204,7 @@ export class TopicPage {
     $('link[title="flattySheet"]').prop('disabled', 'disabled');
     $('link[title="bootstrapSheet"]').remove();
     $('link[title="flattySheet"]').remove();
+    $('a').off("click");
   }
 }
 
