@@ -26,6 +26,7 @@ export class TopicPage {
   tagged: boolean;
   tagUntag: string;
   footnotes: string[] = new Array();
+  public allfootnotes: object;
   constructor(public navCtrl: NavController, public navParams: NavParams, private domSanitizer: DomSanitizer, 
                               public storage: Storage, private platform: Platform, public popoverCtrl: PopoverController, public topicManager: TopicManager) { 
       platform.ready().then(() => {    
@@ -37,6 +38,7 @@ export class TopicPage {
             console.log('App resumed');
         });
       });
+
       this.topic = this.navParams.get("topic");
       this.tagUntag = this.isTopicTagged(this.topic) ? "Untag" : "Tag";
       $("#topicTitle").html(this.topic.Title);
@@ -129,46 +131,51 @@ export class TopicPage {
 
   ionViewDidLoad() { 
     var pg = this;
-    console.log(`enumerateFootnotes is evaluating Topic: ${this.topic.Title}`);
-    var i = 1
-    $("#footnotes").empty().html(this.topicManager.footnotes);
-    $("#footnotes > li").each(function(index, item) {
-      pg.footnotes.push(item);
-      console.log(`Pushed item #${index} onto the footnotes array...`);
-      i++;
-    });
-    console.log(`added a total of ${i} footnotes to footnotes array!`);
-
-      $('a').bind("click", function(e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        window.open(encodeURI(url), '_system', 'location=yes');
+    let allnotes: any;
+    this.topicManager.getFootnotes().then(footnotes => {
+      allnotes = footnotes["footnotes"].replace("<ol>", "").replace("</ol>", "");
+      console.log(`enumerateFootnotes is evaluating Topic: ${this.topic.Title}`);
+      var i = 1
+      $("#footnotes").empty().html(allnotes);
+      $("#footnotes > li").each(function(index, item) {
+        pg.footnotes.push(item);
+        console.log(`Pushed item #${index} onto the footnotes array...`);
+        i++;
       });
-
+      console.log(`added a total of ${i} footnotes to footnotes array!`);
       $("#footnotes").addClass("hidden");
+    });
 
+    $('a').bind("click", function(e) {
+      e.preventDefault();
+      var url = $(this).attr('href');
+      window.open(encodeURI(url), '_system', 'location=yes');
+    });
+    
     $("sup").bind("click", function() {
       var notes = $(this).text();
       var notesList = notes.split(',');
+      var note = "";
       var popupText = "";
       $.each(notesList, function(index, item) {
         item = item.trim();
         if(item.indexOf("-") > -1 ) {
           //a continuous list of notes like 62-67...
+          var thisNoteText = "";
           var lowEnd = +item.substring(0, item.indexOf("-"));
           var highEnd = +item.substring(item.indexOf("-") + 1);
           for (let index = lowEnd; index < highEnd + 1; index++) {
-            var note = pg.footnotes[index - 1];
-            var thisNoteText = $(note).html();
+            note = pg.footnotes[index - 1];
+            thisNoteText = $(note).html();
             var noteText = `<p class='footnote'>${index}. ${thisNoteText}</p>`;
             popupText += noteText;
           }
         } else {
           item = +item.trim();
-          var note = "";
+          note = "";
           try {
             note = pg.footnotes[item - 1];
-            var thisNoteText = $(note).html();
+            thisNoteText = $(note).html();
             if(thisNoteText.indexOf(`<p class="bodytext">`) > - 1) {
               thisNoteText = thisNoteText.replace(`<p class="bodytext">`, "");
               thisNoteText = thisNoteText.replace(`</p>`, "");

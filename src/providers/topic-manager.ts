@@ -8,8 +8,8 @@ export class TopicManager {
   topics: any[];
   encounters: encounter[];
   sections: section[];
-  footnotes: footnote[];
   // opts: RequestOptions;
+  public footnotes: Object;
 
   constructor(public http: Http) {
     console.log('Hello TopicManager Provider');
