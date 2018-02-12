@@ -1,3 +1,4 @@
+import { PopoverPageModule } from './../pages/popover/popover.module';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -38,7 +39,6 @@ const IonicPro = Pro.init('APP_ID', {
     TopicPage,
     SafePipe,
     PopoverPage
-
   ],
   imports: [
     BrowserModule,

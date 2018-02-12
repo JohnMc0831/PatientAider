@@ -5,13 +5,6 @@ import { Storage } from '@ionic/storage';
 import { TopicManager } from '../../providers/topic-manager';
 import { LoadingController } from 'ionic-angular';
 
-/**
- * Generated class for the Tagged page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-@IonicPage()
 @Component({
   selector: 'page-tagged',
   templateUrl: 'tagged.html',

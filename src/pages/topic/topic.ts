@@ -5,15 +5,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 import * as $ from 'jquery';
 import { PopoverController } from 'ionic-angular';
-import { PopoverPage } from '../popover/popover'
+import { PopoverPage } from '../../pages/popover/popover';
 
-/**
- * Generated class for the Topic page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-@IonicPage()
 @Component({
   selector: 'page-topic',
   templateUrl: 'topic.html',
