@@ -1,0 +1,14 @@
+{
+  "name": "PatientAider",
+  "app_id": "e1d536c5",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://localhost:5001/api"
+    }
+  ]
+}

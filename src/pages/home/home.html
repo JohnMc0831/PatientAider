@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar color='primary'>
+    <ion-title class="centered">
+      <h3>PatientAider</h3>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="PatientAiderPage">
+   <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Downloading and Updating Topics...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="centered">
+    <a href="https://patientsafetymovement.org" alt="Patient Safety Movement" title="Patient Safety Movement" target="_blank">
+      <img style="margin:auto;" [src]="psmImage"/>
+    </a>
+  </div>
+  <div class="centered">
+    <span class='listTitle'>To begin, please tap a health care scenario below</span>
+  </div>
+  <ion-list class="accordion-list">
+    <!-- First Level -->
+    <ion-list-header *ngFor="let encounter of encounters; let i = index" no-lines no-padding class="paListHeader">
+      <!-- Toggle Button -->
+      <button ion-item (click)="toggleEncounter(i)" detail-none [ngClass]="{'section-active': encounter.open, 'section': !encounter.open}">
+        <ion-icon item-left name="arrow-forward" *ngIf="!encounter.open"></ion-icon>
+        <ion-icon item-left name="arrow-down" *ngIf="encounter.open"></ion-icon>
+          <span class="encounterTile">{{ encounter.EncounterName }}</span>
+      </button>
+
+      <ion-list *ngIf="encounter.Sections && encounter.open" no-lines no-padding>
+        <!-- Second Level -->
+        <ion-list-header *ngFor="let section of encounter.Sections; let j = index" no-padding>
+          <!-- Toggle Button -->
+          <button ion-item (click)="toggleSection(i, j)"> 
+            <ion-icon item-left name="add" *ngIf="!section.open"></ion-icon>
+            <ion-icon item-left name="close" *ngIf="section.open"></ion-icon>
+            {{ section.SectionName }}
+          </button>
+
+          <!-- Direct Add Button as Fallback -->
+          <button ion-item *ngIf="!section.Topics" ion-item detail-none class="child-item" text-wrap>
+            <ion-icon color='secondary' item-left [name]="section.SectionIcon"></ion-icon>
+            <h1 ion-text color="topicTitle">{{ section.SectionName }}</h1>
+          </button>
+
+          <ion-list *ngIf="section.Topics && section.open" no-padding>
+            <!-- Third Level -->
+            <button ion-item (click)="topicSelected(i, j, k)" *ngFor="let topic of section.Topics; let k = index" detail-none class="child-item" text-wrap>
+              <ion-icon color='primary' item-left [name]="topic.TopicIcon"></ion-icon>
+              <h2 ion-text color="primary">{{ topic.Title }}</h2>
+              <p ion-text color="secondary">{{ topic.Summary }}</p>
+            </button>
+          </ion-list>
+        </ion-list-header>
+      </ion-list>
+    </ion-list-header>
+  </ion-list>
+</ion-content>

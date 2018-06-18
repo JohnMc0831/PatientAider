@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color='primary'>
+    <img style="float:left;margin:0;padding:0;" src="assets/images/PatientAider.png"/>
+    <ion-title class="centered">
+      <h3>PatientAider</h3>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="PatientAiderPage">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+ <ion-list no-lines>
+    <button ion-item *ngFor="let topic of topics" (click)="topicSelected(topic)">
+      <ion-icon color='secondary' item-left [name]="topic.TopicIcon"></ion-icon>
+      <h1 ion-text color="topicTitle">{{ topic.Title }}</h1>
+      <p ion-text color="secondary">{{ topic.Summary }}</p>
+    </button>
+</ion-list>
+  <hr />
+  <div  style='text-align:center;'>
+    <span [hidden]="!this.NoTopics" ion-text color='light'>No tagged topics were found!</span>
+    <button id="clearTaggedTopics" [hidden]="this.NoTopics" ion-button color='light' (click)="clearTaggedTopics()">Clear Tagged Topics</button>
+  </div>
+</ion-content>
