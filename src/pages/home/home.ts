@@ -42,8 +42,11 @@ psmImage: string = "assets/images/";
 
     this.topicManager.getEncounters().then(encounters => {
       this.encounters = encounters;
-      alert('woot!');
     });
+
+    // this.topicManager.getTopics().then(topics => {
+    //   this.topics = topics;
+    // });
    
     // setTimeout(() => {
     //   loading.dismiss();
