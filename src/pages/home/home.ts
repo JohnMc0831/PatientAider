@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { TopicManager } from '../../providers/topic-manager'
+import { TopicManager, encounter, section, topic } from '../../providers/topic-manager'
 import { TopicPage } from '../../pages/topic/topic';
 import { LoadingController } from 'ionic-angular';
 import {Platform} from 'ionic-angular';
 import { Http } from '@angular/http';
 import * as _ from 'lodash';
+import { jsonpFactory } from '../../../node_modules/@angular/http/src/http_module';
 
 @Component({
   selector: 'page-home',
@@ -15,17 +16,13 @@ import * as _ from 'lodash';
 export class HomePage {
 topics: any;
 alltopics: any;
-encounters: any[];
+encounters: encounter[];
 sections: any[];
 psmImage: string = "assets/images/";
 
   constructor(public navCtrl: NavController, public topicManager: TopicManager, public loadingCtrl: LoadingController, public http: Http, public platform: Platform) {
      let loading = this.loadingCtrl.create({
       content: 'Loading Topics...'
-    })
-
-    let processing = this.loadingCtrl.create({
-      content: "Processing and Updating Topics..."
     })
 
     let screenWidth: number = platform.width();
@@ -38,30 +35,35 @@ psmImage: string = "assets/images/";
       this.psmImage += "Patient_Safety_Movement.png"
     }
 
-    //loading.present();
+    loading.present();
 
     this.topicManager.getEncounters().then(encounters => {
+      console.log('loading topic metadata under sections...');
       this.encounters = encounters;
+      this.encounters.forEach(enc => {
+        enc.sections.forEach(sect => {
+          sect.topics = JSON.parse(sect.sectionTopicOrder) as topic[];
+          console.log(`Added ${sect.topics.length} topics to section ${sect.sectionName}`);
+          sect.open = false;
+        })
+      });
     });
 
-    // this.topicManager.getTopics().then(topics => {
-    //   this.topics = topics;
-    // });
-   
-    // setTimeout(() => {
-    //   loading.dismiss();
-    //   processing.present();
-    //   setTimeout(() => {
-    //     processing.dismiss();
-    //   }, 5000)
-    // }, 5000);
+    setTimeout(() => {
+      loading.dismiss();
+    }, 2000);
   }
 
-  topicSelected(i, j, k) {
-    console.log(`Topic ID is ${k}`);
-    var topic = this.encounters[i].Sections[j].Topics[k];
-    console.log(`User selected topic ${topic.Title}`)
-    this.navCtrl.push(TopicPage, {topic: topic, tagged: false}, {animate: true, direction: 'forward'});
+  parseJson(json) {
+    return JSON.parse(json);
+  }
+
+  topicSelected(t) {
+    console.log(`Topic ID is ${t.Id}`);
+    this.topicManager.getTopicById(t.Id).then(topic => {
+      console.log(`User selected topic ${topic.title}`)
+      this.navCtrl.push(TopicPage, {topic: topic, tagged: false}, {animate: true, direction: 'forward'});
+    });
   }
 
   toggleEncounter(i) {
@@ -69,7 +71,9 @@ psmImage: string = "assets/images/";
   }
   
   toggleSection(i, j) {
-    this.encounters[i].Sections[j].open = !this.encounters[i].Sections[j].open;
+    console.log(`Inside toggleSection ${i} ${j}...`);
+    this.encounters[i].sections[j].open = !this.encounters[i].sections[j].open;
+    console.log("toggled open state.");
   }
  
  doRefresh(refresher) {

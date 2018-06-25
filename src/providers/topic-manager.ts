@@ -5,7 +5,7 @@ import { Http } from '@angular/http';
 @Injectable()
 export class TopicManager {
   baseUrl:  string; 
-  topics: any[];
+  topics: topic[];
   encounters: encounter[];
   sections: section[];
   // opts: RequestOptions;
@@ -71,44 +71,67 @@ export class TopicManager {
 
   getTopicById(id) {
     console.log(`Retrieving topic with id ${id} from memory...`);
-    return this.topics.find(t => t.id == id);
+    if(this.topics === undefined) {
+      this.topics = [];
+    }
+    if(this.topics.find(t => t.id == id) == undefined) {
+      //topic not cached yet, so pull it...
+      return new Promise<topic>(resolve => {
+        this.http.get(`${this.baseUrl}/topic/${id}`).map(response => response.json()).subscribe(data => {
+          resolve(data);
+          this.topics.push(data);
+          console.log("Successfully get requested topic from server and added it to cache...");
+        });
+      });
+    } else {
+      var topic = this.topics.find(t => t.id = id);
+      console.log(`Retrieving cached topic ${topic.title}`);
+      return new Promise<topic>(resolve => topic);
+    }
   }
 
+  cacheTopic(id) {
+   
+  }
 }
 
-class topic {
+export class topic {
       id: number;
-      Title: string;
-      TitleGerman: string;
-      TitleSpanish: string;
-      Summary: string;
-      SummaryGerman: string;
-      SummarySpanish: string;
-      Body: string;
-      BodyGerman: string;
-      BodySpanish: string;
-      DisplayOrder: number;
-      Icon: string;
+      title: string;
+      titleGerman: string;
+      titleSpanish: string;
+      summary: string;
+      summaryGerman: string;
+      summarySpanish: string;
+      body: string;
+      bodyGerman: string;
+      bodySpanish: string;
+      displayOrder: number;
+      icon: string;
       constructor() {}
 }
 
-class section {
+export class section {
   id: number;
-  EncounterId: number;
-  SectionName: string;
-  SectionIcon: string;
-  Encounter: encounter;
-  Topics: topic[];
-  TopicIds: number[];
+  encounterId: number;
+  wectionName: string;
+  sectionIcon: string;
+  sectionName: string;
+  encounter: encounter;
+  topics: topic[];
+  topicIds: number[];
+  open: boolean;
+  sectionTopicOrder: string;
 }
 
-class encounter {
+export class encounter {
   id: number;
-  EncounterName: string;
-  Sections: section[];
+  encounterName: string;
+  sections: section[];
+  open: boolean;
 }
 
-class footnote {
+export class footnote {
   id: number;
   footnote: string;
 }

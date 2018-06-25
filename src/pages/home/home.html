@@ -49,12 +49,11 @@
             <h1 ion-text color="topicTitle">{{ section.sectionName }}</h1>
           </button> -->
 
-          <ion-list *ngIf="section.open" no-padding>
-            <!-- Third Level -->
-            <button ion-item (click)="topicSelected(i, j, k)" *ngFor="let topic of section.Topics; let k = index" detail-none class="child-item" text-wrap>
-              <ion-icon color='primary' item-left [name]="topic.TopicIcon"></ion-icon>
-              <h2 ion-text color="primary">{{ topic.Title }}</h2>
-              <p ion-text color="secondary">{{ topic.Summary }}</p>
+          <ion-list *ngIf="section.topics && section.open" no-padding>
+            <button ion-item (click)="topicSelected(t)" *ngFor="let t of section.topics" detail-none class="child-item" text-wrap>
+              <ion-icon color='primary' item-left [name]="t.icon"></ion-icon>
+              <h2 ion-text color="primary">{{ t.title }}</h2>
+              <p ion-text color="secondary">{{ t.summary }}</p>
             </button>
           </ion-list>
         </ion-list-header>
