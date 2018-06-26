@@ -34,14 +34,15 @@ export class TopicPage {
 
       this.topic = this.navParams.get("topic");
       this.tagUntag = this.isTopicTagged(this.topic) ? "Untag" : "Tag";
-      $("#topicTitle").html(this.topic.Title);
+      $("#topicTitle").html(this.topic.title);
       //this.banner = "<a href='http://patientsafetymovement.org/'><img src='https://virgil.ftltech.org/Content/PatientSafetyMovement-phone.png' style='margin:auto;display:block' alt='Patient Safety Movement' title='Patient Safety Movement'/></a>";
       this.topicBody =  //"<!DOCTYPE html><html lang='en' xmlns='http://www.w3.org/1999/xhtml'>" +
-	                      //    "<head><meta charset='utf-8' /><title></title>" +
+                        //    "<head><meta charset='utf-8' /><title></title>" +
+                        //TODO:  Implement new stylesheets.
                               "<link rel='stylesheet' title='bootstrapSheet' type='text/css' href='https://virgil.ftltech.org/Content/bootstrap.css'>" +
                             "<link rel='stylesheet' title='flattySheet' type='text/css' href='https://virgil.ftltech.org/Content/flatty.css'>" +
                             "<link rel='stylesheet' title='bigfootSheet' type='text/css' href='https://virgil.ftltech.org/Content/bigfoot-default.css'>" +
-                            "</head><body>" + this.topic.Body + "</body></html>";
+                            "</head><body>" + this.topic.body + "</body></html>";
       this.htmlBody = domSanitizer.bypassSecurityTrustHtml(this.topicBody);
   }
 
@@ -58,14 +59,14 @@ export class TopicPage {
         if(val!="" && val != null && val != []) {
           var taggedTopics = JSON.parse(val) || [];
           for (let t of taggedTopics) {
-            if(t.indexOf(topic.Title) > -1) {
-              console.log(`Topic ${topic.Title} is tagged.`);
+            if(t.indexOf(topic.title) > -1) {
+              console.log(`Topic ${topic.title} is tagged.`);
               this.tagUntag = "Untag";
               return true;
             }  
           }
         }
-        console.log(`Topic ${topic.Title} is NOT tagged.`);
+        console.log(`Topic ${topic.title} is NOT tagged.`);
         return false;
       });
      });
@@ -81,31 +82,31 @@ export class TopicPage {
       } else {
           console.log(`Topic Tagged State: UNTAGGED - STORAGE EMPTY`);
           //tag the topic add it to storage
-          taggedTopics.push(topic.Title);
+          taggedTopics.push(topic.title);
           this.tagUntag = "Untag";
           this.storage.set("tagged", JSON.stringify(taggedTopics));
-          console.log(`Tagged topic ${topic.Title}`);
+          console.log(`Tagged topic ${topic.title}`);
           return;
       }
-      if(val.indexOf(topic.Title) > -1) {
+      if(val.indexOf(topic.title) > -1) {
         console.log(`Topic Tagged State: TAGGED`);
         //untag the topic (remove it from storage)
         for (let t of taggedTopics) {
-          if(t.indexOf(topic.Title) == -1) {
-            newTags.push(topic.Title);
+          if(t.indexOf(topic.title) == -1) {
+            newTags.push(topic.title);
           }
         }
         this.tagUntag = "Tag";
         this.storage.set("tagged", JSON.stringify(newTags));
         console.log(`storage: ${JSON.stringify(newTags)}`);
-        console.log(`Untagged topic ${topic.Title}`);
+        console.log(`Untagged topic ${topic.title}`);
       } else {
         console.log(`Topic Tagged State: UNTAGGED`);
         //tag the topic add it to storage
-        taggedTopics.push(topic.Title);
+        taggedTopics.push(topic.title);
         this.tagUntag = "Untag";
         this.storage.set("tagged", JSON.stringify(taggedTopics));
-        console.log(`Tagged topic ${topic.Title}`);
+        console.log(`Tagged topic ${topic.title}`);
       }
     });
     });
@@ -126,13 +127,13 @@ export class TopicPage {
     var pg = this;
     let allnotes: any;
     this.topicManager.getFootnotes().then(footnotes => {
-      allnotes = footnotes["footnotes"].replace("<ol>", "").replace("</ol>", "");
-      console.log(`enumerateFootnotes is evaluating Topic: ${this.topic.Title}`);
+      allnotes = footnotes["footnotes1"].replace("<ol>", "").replace("</ol>", "");
+      console.log(`enumerateFootnotes is evaluating Topic: ${this.topic.title}`);
       var i = 1
       $("#footnotes").empty().html(allnotes);
       $("#footnotes > li").each(function(index, item) {
         pg.footnotes.push(item);
-        console.log(`Pushed item #${index} onto the footnotes array...`);
+        //console.log(`Pushed item #${index} onto the footnotes array...`);
         i++;
       });
       console.log(`added a total of ${i} footnotes to footnotes array!`);
@@ -191,7 +192,7 @@ export class TopicPage {
   }
 
   ionViewWillLeave() {
-    console.log(`ionViewWillLeave Topic: ${this.topic.Title}`);
+    console.log(`ionViewWillLeave Topic: ${this.topic.title}`);
     console.log('tearing down css!!! RAWWRRR!!!!!');
     $('link[title="bootstrapSheet"]').prop('disabled', 'disabled');
     $('link[title="flattySheet"]').prop('disabled', 'disabled');

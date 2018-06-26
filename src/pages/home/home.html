@@ -51,9 +51,9 @@
 
           <ion-list *ngIf="section.topics && section.open" no-padding>
             <button ion-item (click)="topicSelected(t)" *ngFor="let t of section.topics" detail-none class="child-item" text-wrap>
-              <ion-icon color='primary' item-left [name]="t.icon"></ion-icon>
-              <h2 ion-text color="primary">{{ t.title }}</h2>
-              <p ion-text color="secondary">{{ t.summary }}</p>
+              <ion-icon color='primary' item-left [name]="t.Icon"></ion-icon>
+              <h2 ion-text color="primary">{{ t.Title }}</h2>
+              <p ion-text color="secondary">{{ t.Summary }}</p>
             </button>
           </ion-list>
         </ion-list-header>

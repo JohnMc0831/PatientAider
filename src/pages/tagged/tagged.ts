@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TopicPage } from '../topic/topic';
 import { Storage } from '@ionic/storage';
-import { TopicManager } from '../../providers/topic-manager';
+import { TopicManager, topic } from '../../providers/topic-manager';
 import { LoadingController } from 'ionic-angular';
 
 @Component({
@@ -37,9 +37,12 @@ export class TaggedPage {
     }, 2000);
   }
 
-   topicSelected(topic) {
-    console.log(`User selected topic ${topic.Title}`)
-    this.navCtrl.push(TopicPage, {topic: topic, tagged: true}, {animate: true, direction: 'forward'});
+   topicSelected(t) {
+    console.log(`Topic ID is ${t.id}`);
+    this.topicManager.getTopicById(t.id).then(topic => {
+      console.log(`User selected topic ${topic.title}`)
+      this.navCtrl.push(TopicPage, {topic: topic, tagged: false}, {animate: true, direction: 'forward'});
+    });
   }
 
   clearTaggedTopics() {
@@ -66,11 +69,10 @@ export class TaggedPage {
             this.topicManager.getTopics().then(topics => {
               for (let tag of taggedTopics) {
                 for (let topic of topics) {
-                  if(tag != "" && topic.Title.toLowerCase().indexOf(tag.toLowerCase()) > -1) {
+                  if(tag != "" && topic.title.toLowerCase().indexOf(tag.toLowerCase()) > -1) {
                     //tagged topic...add to topics list.
                     this.topics.push(topic);
-                    console.log(`Pushing topic ${topic.Title} onto stack.`);
-                    console.log("Settings NoTopics var to false.");
+                    console.log(`Pushing topic ${topic.title} onto stack.`);
                     this.NoTopics = false;
                     break;
                   }
@@ -84,20 +86,4 @@ export class TaggedPage {
     }, 500);
     });
   }
-}
-
-class topic {
-      id: number;
-      Title: string;
-      TitleGerman: string;
-      TitleSpanish: string;
-      Summary: string;
-      SummaryGerman: string;
-      SummarySpanish: string;
-      Body: string;
-      BodyGerman: string;
-      BodySpanish: string;
-      DisplayOrder: number;
-      Icon: string;
-      constructor() {}
 }

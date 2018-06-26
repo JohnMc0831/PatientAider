@@ -21,7 +21,7 @@ export class TopicManager {
    getTopics() {
     console.log(`Querying this url:  ${this.baseUrl}/Topics`);
     return new Promise<topic[]>(resolve => {
-      this.http.get(`${this.baseUrl}/Topics`) //, this.opt)
+      this.http.get(`${this.baseUrl}/topics`) //, this.opt)
       .map(res => res.json())
       .subscribe(data => {
         resolve(data);
@@ -61,7 +61,7 @@ export class TopicManager {
   getFootnotes() {
     console.log(`Querying this url:  ${this.baseUrl}/Footnotes`);
     return new Promise<footnote[]>(resolve => {
-      this.http.get(`${this.baseUrl}/Footnotes`).map(response => response.json()).subscribe(data => {
+      this.http.get(`${this.baseUrl}/footnotes`).map(response => response.json()).subscribe(data => {
         resolve(data);
         this.footnotes = data;
         console.log("getFootnotes() call successfully completed!");
@@ -74,7 +74,7 @@ export class TopicManager {
     if(this.topics === undefined) {
       this.topics = [];
     }
-    if(this.topics.find(t => t.id == id) == undefined) {
+    if(this.topics.find(t => t.id == id) == undefined || this.topics.find(t => t.id == id).body == undefined) {
       //topic not cached yet, so pull it...
       return new Promise<topic>(resolve => {
         this.http.get(`${this.baseUrl}/topic/${id}`).map(response => response.json()).subscribe(data => {
@@ -84,9 +84,11 @@ export class TopicManager {
         });
       });
     } else {
-      var topic = this.topics.find(t => t.id = id);
+      var topic = this.topics.find(t => t.id == id);
       console.log(`Retrieving cached topic ${topic.title}`);
-      return new Promise<topic>(resolve => topic);
+      return new Promise((resolve) => {
+        resolve(topic);
+      });
     }
   }
 
