@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color='primary'>
+      <ion-title class="centered">
+      <h3>PatientAider&trade;</h3>
+    </ion-title>
+    <button ion-button color="tagButton" style="float:right;" (click)="toggleTagState(topic)">{{this.tagUntag}}!</button>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content id='topicBody' padding>
+  <div [innerHTML]="this.htmlBody"></div>
+  <div class="centered">
+    <button ion-button color="primary" (click)="toggleFootnotes($event)">Show/Hide Footnotes</button>
+  </div>
+</ion-content>

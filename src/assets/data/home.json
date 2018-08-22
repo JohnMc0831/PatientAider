@@ -1,0 +1,132 @@
+{
+    "items": [
+        {
+            "name": "Communication",
+            "children": [
+                {
+                    "name": "Communication",
+                    "information": "Asking, Listening & Understanding",
+                    "topicId": 14,
+                    "icon": "chatboxes"
+                },
+                {
+                    "name": "Surgery",
+                    "icon": "",
+                    "children": [
+                        {
+                            "name": "Sepsis",
+                            "information": "Life-threatening Overreaction to Infection",
+                            "topicId": 1,
+                            "icon": "pulse"
+                        },
+                        {
+                            "name": "Drug Errors",
+                            "information": "Drug Errors in US Hospitals",
+                            "topicId": 6,
+                            "icon": "flask"
+                        },
+                        {
+                            "name": "Health Care Team",
+                            "information": "Who's Who in the Hospital",
+                            "topicId": 139,
+                            "icon": "people"
+                        }
+                    ]
+                },
+                {
+                    "name": "Pregnancy",
+                    "icon": "",
+                    "children": [
+                        {
+                            "name": "Preeclampsia",
+                            "information": "Serious Pregnancy/Postpartum Condition",
+                            "topicId": 32,
+                            "icon": "woman"
+                        },
+                        {
+                            "name": "PPH",
+                            "information": "Post-Partum Hemorrhage",
+                            "topicId": 40,
+                            "icon": "rainy"
+                        },
+                        {
+                            "name": "Preemies & Oxygen",
+                            "information": "Hypoxia & Hyperoxia",
+                            "topicId": 41,
+                            "icon": "medical"
+                        }
+                    ]
+
+                },
+                {
+                    "name": "Pediatrics",
+                    "icon": "",
+                    "children": [
+                        {
+                            "name": "Stress Reduction",
+                            "information": "Ways to Relax",
+                            "topicId": 16,
+                            "icon": "leaf"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Before the Hospital",
+            "children": [
+                {
+                    "name": "Surgery"
+                },
+                {
+                    "name": "Pregnancy"
+                },
+                {
+                    "name": "Pediatrics"
+                }
+            ]
+        },
+        {
+            "name": "Emergency Department",
+            "children": [
+                {
+                    "name": "Surgery"
+                },
+                {
+                    "name": "Pregnancy"
+                },
+                {
+                    "name": "Pediatrics"
+                }
+            ]
+        },
+        {
+            "name": "In the Hospital",
+            "children": [
+                {
+                    "name": "Surgery"
+                },
+                {
+                    "name": "Pregnancy"
+                },
+                {
+                    "name": "Pediatrics"
+                }
+            ]
+        },
+        {
+            "name": "After Discharge",
+            "children": [
+                {
+                    "name": "Surgery"
+                },
+                {
+                    "name": "Pregnancy"
+                },
+                {
+                    "name": "Pediatrics"
+                }
+            ]
+        }
+    ]
+}
